@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vaibhav Singh — Product Designer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0c0b;
+      --surface: #141310;
+      --border: rgba(255,255,255,0.07);
+      --text: #e8e3da;
+      --muted: #6b6459;
+      --accent: #c9a96e;
+      --accent-dim: rgba(201,169,110,0.12);
+      --red: #c96e6e;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      cursor: none;
+      overflow-x: hidden;
+    }
+
+    /* Custom cursor */
+    .cursor {
+      position: fixed;
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s ease, width 0.2s ease, height 0.2s ease, opacity 0.2s ease;
+      mix-blend-mode: screen;
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 32px; height: 32px;
+      border: 1px solid rgba(201,169,110,0.4);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s ease, width 0.3s ease, height 0.3s ease;
+    }
+    body:hover .cursor { opacity: 1; }
+
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    /* Layout */
+    .container { max-width: 720px; margin: 0 auto; padding: 0 32px; }
+
+    /* Navigation */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 24px 0;
+      background: linear-gradient(to bottom, var(--bg) 60%, transparent);
+    }
+    nav .inner {
+      max-width: 720px; margin: 0 auto; padding: 0 32px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 17px;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a.active { color: var(--accent); }
+
+    /* Hero */
+    #hero {
+      padding: 160px 0 100px;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.1s;
+    }
+    .hero-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(52px, 8vw, 76px);
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.2s;
+    }
+    .hero-name em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .hero-bio {
+      margin-top: 28px;
+      max-width: 480px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.75;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.35s;
+    }
+    .hero-meta {
+      margin-top: 40px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.5s;
+    }
+    .hero-location {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+    .hero-location::before { content: '◎ '; color: var(--accent); }
+    .btn {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 10px 20px;
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: transparent;
+      transition: border-color 0.2s, background 0.2s, color 0.2s;
+      cursor: none;
+    }
+    .btn:hover {
+      border-color: var(--accent);
+      background: var(--accent-dim);
+      color: var(--accent);
+    }
+    .btn-primary {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .btn-primary:hover {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    /* Sections */
+    section { padding: 80px 0; border-bottom: 1px solid var(--border); }
+
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 48px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* Work */
+    .work-grid { display: flex; flex-direction: column; gap: 2px; }
+
+    .work-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: start;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none;
+      color: inherit;
+      cursor: none;
+      transition: padding-left 0.3s ease;
+      position: relative;
+    }
+    .work-item:last-child { border-bottom: none; }
+    .work-item::before {
+      content: '';
+      position: absolute;
+      left: -32px; top: 0; bottom: 0; width: 2px;
+      background: var(--accent);
+      transform: scaleY(0);
+      transition: transform 0.3s ease;
+      transform-origin: top;
+    }
+    .work-item:hover { padding-left: 12px; }
+    .work-item:hover::before { transform: scaleY(1); }
+
+    .work-meta {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .work-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      line-height: 1.2;
+      transition: color 0.2s;
+    }
+    .work-item:hover .work-title { color: var(--accent); }
+    .work-desc {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      max-width: 420px;
+    }
+    .work-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 4px 8px;
+      margin-top: 4px;
+      letter-spacing: 0.06em;
+    }
+    .work-arrow {
+      font-size: 18px;
+      color: var(--muted);
+      align-self: center;
+      transition: transform 0.2s, color 0.2s;
+    }
+    .work-item:hover .work-arrow {
+      transform: translate(4px, -4px);
+      color: var(--accent);
+    }
+
+    /* About */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+    }
+    .about-text {
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 14px;
+    }
+    .about-text p + p { margin-top: 16px; }
+    .about-text strong { color: var(--text); font-weight: 500; }
+
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .skill-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 5px 10px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .skill-tag:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .skills-group-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+      margin-top: 24px;
+    }
+    .skills-group-label:first-child { margin-top: 0; }
+
+    /* Experience */
+    .exp-list { display: flex; flex-direction: column; }
+    .exp-item {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 32px;
+      padding: 32px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .exp-item:last-child { border-bottom: none; }
+    .exp-date {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      padding-top: 4px;
+    }
+    .exp-role {
+      font-family: 'DM Serif Display', serif;
+      font-size: 18px;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+    .exp-company {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+      margin-bottom: 14px;
+    }
+    .exp-points { list-style: none; }
+    .exp-points li {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+      padding: 3px 0 3px 16px;
+      position: relative;
+    }
+    .exp-points li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--border);
+    }
+
+    /* Contact */
+    #contact { border-bottom: none; }
+    .contact-heading {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(36px, 6vw, 52px);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .contact-heading em { color: var(--accent); font-style: italic; }
+    .contact-sub {
+      color: var(--muted);
+      font-size: 14px;
+      max-width: 400px;
+      margin-bottom: 40px;
+    }
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .contact-link {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      transition: color 0.2s, border-color 0.2s;
+      cursor: none;
+    }
+    .contact-link:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    /* Footer */
+    footer {
+      padding: 32px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    footer span {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .about-grid { grid-template-columns: 1fr; gap: 32px; }
+      .exp-item { grid-template-columns: 1fr; gap: 8px; }
+      nav .inner { padding: 0 20px; }
+      .container { padding: 0 20px; }
+      .nav-links { gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- Nav -->
+  <nav>
+    <div class="inner">
+      <a class="nav-logo" href="#hero">VS</a>
+      <ul class="nav-links">
+        <li><a href="#work">Work</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section id="hero">
+    <div class="container">
+      <p class="hero-eyebrow">Product Designer · Pune, India</p>
+      <h1 class="hero-name">Vaibhav<br /><em>Singh</em></h1>
+      <p class="hero-bio">
+        Crafting end-to-end digital experiences across SaaS, fintech, compliance, and Web3. I simplify complex workflows, build design systems, and ship interfaces that feel both intuitive and considered.
+      </p>
+      <div class="hero-meta">
+        <span class="hero-location">Available for opportunities</span>
+        <a href="/cdn-cgi/l/email-protection#502631393238312623393e37386169606910373d31393c7e333f3d" class="btn btn-primary">Get in touch</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Work -->
+  <section id="work">
+    <div class="container">
+      <div class="section-label">Selected Work</div>
+      <div class="work-grid">
+
+        <a class="work-item reveal" href="#">
+          <div>
+            <div class="work-meta">Perforce Software · 2024–Present</div>
+            <div class="work-title">Continuous Compliance</div>
+            <p class="work-desc">Transforming complex data privacy workflows into intuitive, efficient interfaces for a large multi-product SaaS portfolio.</p>
+            <span class="work-tag">SaaS · UX/UI · Design System</span>
+          </div>
+          <span class="work-arrow">↗</span>
+        </a>
+
+        <a class="work-item reveal" href="#">
+          <div>
+            <div class="work-meta">Credflow · 2023–2024</div>
+            <div class="work-title">B2B Fintech Credit Platform</div>
+            <p class="work-desc">End-to-end design of underwriting, onboarding, and risk workflows for a credit line product serving SMEs across India.</p>
+            <span class="work-tag">Fintech · Interaction Design · Mobile-first</span>
+          </div>
+          <span class="work-arrow">↗</span>
+        </a>
+
+        <a class="work-item reveal" href="#">
+          <div>
+            <div class="work-meta">Hatio Tech · 2021–2023</div>
+            <div class="work-title">Crypto Exchange & Web3 Flows</div>
+            <p class="work-desc">Built a cryptocurrency exchange from scratch — trading flows, token discovery, and end-to-end Web3 purchase experiences.</p>
+            <span class="work-tag">Web3 · IA · UI Design</span>
+          </div>
+          <span class="work-arrow">↗</span>
+        </a>
+
+        <a class="work-item reveal" href="#">
+          <div>
+            <div class="work-meta">Hatio Tech · 2021–2023</div>
+            <div class="work-title">Intech Wallet — Payout Module</div>
+            <p class="work-desc">Designed payout and bulk transfer flows for a consumer payment ecosystem, spanning web, iOS, and Android.</p>
+            <span class="work-tag">Payments · Cross-platform · UX Writing</span>
+          </div>
+          <span class="work-arrow">↗</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="container">
+      <div class="section-label">About Me</div>
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <p>I'm a Product Designer based in <strong>Pune, India</strong>, with a background spanning SaaS, fintech, and Web3 — places where design has to earn its complexity.</p>
+          <p>My work lives at the intersection of <strong>UX strategy and interaction craft</strong>. I care deeply about accessibility, scalable design systems, and the kind of UX writing that makes interfaces feel human.</p>
+          <p>Lately I've been exploring AI-powered design tooling — using Figma Make, Claude Code, and Lovable to accelerate workflows without sacrificing quality.</p>
+          <p>Trained as a mechanical engineer, I bring a systems mindset to every problem I touch.</p>
+        </div>
+        <div class="reveal">
+          <div class="skills-group-label">Design</div>
+          <div class="skills-list">
+            <span class="skill-tag">Product Design</span>
+            <span class="skill-tag">UX/UI</span>
+            <span class="skill-tag">Interaction Design</span>
+            <span class="skill-tag">UX Writing</span>
+            <span class="skill-tag">User Research</span>
+            <span class="skill-tag">Journey Mapping</span>
+            <span class="skill-tag">Information Architecture</span>
+            <span class="skill-tag">Usability Testing</span>
+            <span class="skill-tag">Design Systems</span>
+            <span class="skill-tag">Accessibility (WCAG)</span>
+          </div>
+          <div class="skills-group-label">Tools</div>
+          <div class="skills-list">
+            <span class="skill-tag">Figma</span>
+            <span class="skill-tag">Adobe XD</span>
+            <span class="skill-tag">Balsamiq</span>
+            <span class="skill-tag">InVision</span>
+            <span class="skill-tag">Figma Make</span>
+            <span class="skill-tag">Claude Code</span>
+          </div>
+          <div class="skills-group-label">Practices</div>
+          <div class="skills-list">
+            <span class="skill-tag">Agile Collaboration</span>
+            <span class="skill-tag">Cross-functional Teams</span>
+            <span class="skill-tag">Remote / Distributed</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section id="experience">
+    <div class="container">
+      <div class="section-label">Experience</div>
+      <div class="exp-list">
+
+        <div class="exp-item reveal">
+          <span class="exp-date">Aug 2024 — Present</span>
+          <div>
+            <div class="exp-role">Product Designer</div>
+            <div class="exp-company">Perforce Software (Delphix Portfolio)</div>
+            <ul class="exp-points">
+              <li>Designing across a large multi-product SaaS portfolio, contributing to major redesign initiatives for usability, accessibility, and visual consistency.</li>
+              <li>Lead design for Continuous Compliance, transforming complex data privacy workflows into intuitive interfaces.</li>
+              <li>Collaborated with PMs and engineering across India, US, and EMEA to align on requirements and support delivery.</li>
+              <li>Strengthened the internal design system with reusable patterns and unified UI components.</li>
+              <li>Created Figma plugins to enhance design workflow efficiency.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="exp-item reveal">
+          <span class="exp-date">Nov 2023 — Apr 2024</span>
+          <div>
+            <div class="exp-role">Product Designer</div>
+            <div class="exp-company">Credflow</div>
+            <ul class="exp-points">
+              <li>Designed core journeys for B2B fintech products offering credit lines to SMEs.</li>
+              <li>Owned end-to-end design for underwriting, onboarding, and risk workflows.</li>
+              <li>Delivered mobile-first experiences that simplified financial tasks and increased user activation.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="exp-item reveal">
+          <span class="exp-date">Jul 2021 — May 2023</span>
+          <div>
+            <div class="exp-role">Associate UX/UI Designer</div>
+            <div class="exp-company">Hatio Tech (Billdesk Subsidiary)</div>
+            <ul class="exp-points">
+              <li>Designed multiple features for Billdesk's operations and internal SaaS platforms, improving efficiency for high-volume workflows.</li>
+              <li>Built a cryptocurrency exchange from scratch — trading flows, token discovery, and end-to-end Web3 purchase experiences.</li>
+              <li>Shaped IA, wireframes, and UI for a consumer-facing fintech product across web, iOS, and Android.</li>
+              <li>Collaborated with engineering to refine components and evolve internal design system usage.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="exp-item reveal">
+          <span class="exp-date">Jun 2024 — Jul 2024</span>
+          <div>
+            <div class="exp-role">Product Design Fellowship</div>
+            <div class="exp-company">Ownpath</div>
+            <ul class="exp-points">
+              <li>Specialized training in UX writing, ethics in design, usability testing, storytelling, and research-driven design.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="exp-item reveal">
+          <span class="exp-date">Apr 2021 — Jun 2021</span>
+          <div>
+            <div class="exp-role">Product Design Intern</div>
+            <div class="exp-company">Hatio Tech</div>
+            <ul class="exp-points">
+              <li>Supported design for internal B2B Billdesk platforms and built early prototypes.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Education -->
+      <div style="margin-top: 48px;" class="reveal">
+        <div class="skills-group-label">Education & Certifications</div>
+        <div class="skills-list">
+          <span class="skill-tag">BE — Mechanical Engineering</span>
+          <span class="skill-tag">Interaction Design Foundation</span>
+          <span class="skill-tag">Product Management Certification</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-label">Contact</div>
+      <h2 class="contact-heading reveal">Let's build something<br /><em>worth remembering.</em></h2>
+      <p class="contact-sub reveal">Open to full-time roles, freelance collaborations, and interesting conversations about design.</p>
+      <div class="contact-links reveal">
+        <a class="contact-link" href="/cdn-cgi/l/email-protection#0670676f646e6770756f68616e373f363f46616b676f6a2865696b">
+          <span>✉</span> <span class="__cf_email__" data-cfemail="2553444c474d4453564c4b424d141c151c654248444c490b464a48">[email&#160;protected]</span>
+        </a>
+        <a class="contact-link" href="tel:+919405942240">
+          <span>◎</span> +91 940 594 2240
+        </a>
+        <a class="contact-link" href="#" target="_blank">
+          <span>↗</span> Portfolio
+        </a>
+        <a class="contact-link" href="https://linkedin.com" target="_blank">
+          <span>↗</span> LinkedIn
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <div class="container">
+    <footer>
+      <span>© 2025 Vaibhav Singh</span>
+      <span>Designed & built with intention</span>
+    </footer>
+  </div>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+      rx += (e.clientX - rx) * 0.12;
+      ry += (e.clientY - ry) * 0.12;
+      ring.style.left = e.clientX + 'px';
+      ring.style.top = e.clientY + 'px';
+    });
+
+    document.querySelectorAll('a, .skill-tag, .btn').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.style.width = '16px';
+        cursor.style.height = '16px';
+        ring.style.width = '48px';
+        ring.style.height = '48px';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.style.width = '8px';
+        cursor.style.height = '8px';
+        ring.style.width = '32px';
+        ring.style.height = '32px';
+      });
+    });
+
+    // Active nav on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    const activateNav = () => {
+      let current = '';
+      sections.forEach(sec => {
+        if (window.scrollY >= sec.offsetTop - 120) current = sec.id;
+      });
+      navLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+      });
+    };
+
+    window.addEventListener('scroll', activateNav, { passive: true });
+    activateNav();
+
+    // Smooth scroll for nav clicks (belt & suspenders)
+    navLinks.forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entrie
