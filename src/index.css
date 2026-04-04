@@ -1,0 +1,206 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;1,6..72,300;1,6..72,400&display=swap');
+
+:root {
+  --bg: #f5f2ec;
+  --bg-offset: #eae7df;
+  --ink: #1a1917;
+  --ink-secondary: #3d3a35;
+  --muted: #6b665e;
+  --rule: #1a1917;
+  --rule-light: #d2cec5;
+  --accent: #9e1c1c;
+  --accent-soft: rgba(158, 28, 28, 0.08);
+
+  --font-serif-display: 'Playfair Display', serif;
+  --font-serif-body: 'Newsreader', 'Times New Roman', serif;
+  --font-sans: 'Inter', sans-serif;
+
+  --text-xs: clamp(10px, 0.75vw, 11px);
+  --text-sm: clamp(12px, 0.85vw, 13px);
+  --text-base: clamp(15px, 1.1vw, 17px);
+  --text-lg: clamp(20px, 1.6vw, 24px);
+  --text-xl: clamp(28px, 2.5vw, 36px);
+  --text-2xl: clamp(36px, 3.5vw, 52px);
+  --text-display: clamp(56px, 8vw, 120px);
+
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2.5rem;
+  --space-xl: 4rem;
+  --space-2xl: 6rem;
+  --space-section: 8rem;
+}
+
+[data-theme="dark"] {
+  --bg: #181715;
+  --bg-offset: #211f1d;
+  --ink: #e5e1d8;
+  --ink-secondary: #c4bfb5;
+  --muted: #8a847a;
+  --rule: #3d3a35;
+  --rule-light: #2e2b27;
+  --accent: #e06449;
+  --accent-soft: rgba(224, 100, 73, 0.1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-serif-body);
+  font-size: var(--text-base);
+  line-height: 1.7;
+  cursor: none;
+  transition: background 0.5s ease, color 0.5s ease;
+  overflow-x: hidden;
+}
+
+.newspaper-layout {
+  animation: page-load 0.6s ease-out;
+}
+
+@keyframes page-load {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ═══ Base Typography ═══ */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif-display);
+  font-weight: 900;
+  line-height: 1.1;
+  color: var(--ink);
+}
+
+a {
+  color: var(--ink);
+  text-decoration: none;
+  cursor: none;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  background: none;
+  border: none;
+  font-family: inherit;
+  color: inherit;
+  cursor: none;
+}
+
+/* ═══ Custom Cursor ═══ */
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background-color: var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.25s ease, height 0.25s ease, background-color 0.25s ease, border 0.25s ease;
+  mix-blend-mode: difference;
+}
+
+.cursor-dot.hovering {
+  width: 44px;
+  height: 44px;
+  background-color: transparent;
+  border: 1.5px solid var(--accent);
+  mix-blend-mode: normal;
+}
+
+/* ═══ Layout ═══ */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 clamp(1.5rem, 4vw, 3rem);
+}
+
+/* ═══ Editorial Elements ═══ */
+.dropcap::first-letter {
+  font-family: var(--font-serif-display);
+  font-size: 3.2em;
+  font-weight: 900;
+  line-height: 0.82;
+  float: left;
+  margin-right: 0.08em;
+  padding-top: 0.06em;
+  color: var(--ink);
+}
+
+.divider-light {
+  height: 1px;
+  background-color: var(--rule-light);
+  width: 100%;
+  margin: var(--space-section) 0;
+}
+
+/* ═══ Section Shared ═══ */
+.editorial-section {
+  margin-top: 56px;
+  border-top: 1px solid var(--rule-light);
+  padding-top: 80px;
+}
+
+#hero.editorial-section {
+  margin-top: 40px;
+  border-top: none;
+  padding-top: 0;
+}
+
+/* ═══ Reveal ═══ */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ═══ Typography Helpers ═══ */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.accent-text {
+  color: var(--accent);
+  font-style: italic;
+}
+
+.sans-text {
+  font-family: var(--font-sans);
+}
+
+/* ═══ Responsive ═══ */
+@media (max-width: 768px) {
+  :root {
+    --space-section: 3rem;
+  }
+}

@@ -1,0 +1,260 @@
+/* ═══ Hero Layout ═══ */
+.hero-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  padding: var(--space-xl) 0 var(--space-lg);
+  align-items: stretch;
+}
+
+.hero-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-name {
+  font-size: var(--text-display);
+  line-height: 0.88;
+  letter-spacing: -0.03em;
+  margin-bottom: var(--space-sm);
+}
+
+.hero-role {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  font-weight: 500;
+  margin-bottom: var(--space-lg);
+  padding-top: var(--space-sm);
+  border-top: 2px solid var(--accent);
+  display: inline-block;
+  align-self: flex-start;
+  padding-right: var(--space-lg);
+}
+
+.hero-description {
+  font-size: var(--text-base);
+  line-height: 1.8;
+  color: var(--ink-secondary);
+  max-width: 440px;
+}
+
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: var(--space-lg);
+  font-weight: 500;
+}
+
+.availability-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #22c55e;
+  animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-dot {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+/* ═══ Illustration ═══ */
+.hero-illustration {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.anim-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  height: 100%;
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  /* Edge blending — soft vignette */
+  -webkit-mask-image: radial-gradient(ellipse 90% 90% at center, #000 58%, transparent 98%);
+  mask-image: radial-gradient(ellipse 90% 90% at center, #000 58%, transparent 98%);
+  
+  /* Blending modes applied here seamlessly fuse everything inside into the page background */
+  mix-blend-mode: multiply;
+}
+
+[data-theme="dark"] .anim-wrap {
+  mix-blend-mode: screen;
+}
+
+/* ═══ Lottie — newspaper illustration ═══ */
+.lottie-player-bg {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  /* Light mode: We boost contrast to darken the table to ink values,
+     while keeping the background purely white (max brightness) so it vanishes against the page */
+  filter: contrast(1.3) saturate(1.2) brightness(1.01);
+}
+
+/* Dark mode — invert to push white to pure black (vanishing), 
+   and use grayscale + sepia to create that glowing blueprint vibrancy! */
+[data-theme="dark"] .lottie-player-bg {
+  filter: invert(1) grayscale(0.8) sepia(0.15) contrast(1.3) brightness(1.15);
+}
+
+/* ═══ Impact Zone — positions pills + sparks at exact hammer hit ═══ */
+.impact-zone {
+  position: absolute;
+  /* Hammer strikes on the bench surface — this is the nail/impact point */
+  top: 42%;
+  left: 38%;
+  width: 0;
+  height: 0;
+  z-index: 15;
+  pointer-events: none;
+}
+
+/* ═══ Spark Burst ═══ */
+.impact-burst {
+  position: absolute;
+  top: 52px;
+  left: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.burst-dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0);
+}
+
+/* Colorful spark palette */
+.burst-1 { background: #F24E1E; }
+.burst-2 { background: #0ACF83; }
+.burst-3 { background: #A259FF; }
+.burst-4 { background: #1ABCFE; }
+.burst-5 { background: #FF7262; }
+.burst-6 { background: #D97757; }
+.burst-7 { background: #FFD700; }
+.burst-8 { background: #FF6B9D; }
+
+/* When active: animate sparks outward */
+.impact-burst.active .burst-dot {
+  animation: burst-fly 0.5s ease-out forwards;
+}
+
+.impact-burst.active .burst-1 { animation-delay: 0ms;   --burst-x: -28px; --burst-y: -35px; --burst-scale: 1.1; }
+.impact-burst.active .burst-2 { animation-delay: 20ms;  --burst-x:  24px; --burst-y: -30px; --burst-scale: 0.8; }
+.impact-burst.active .burst-3 { animation-delay: 40ms;  --burst-x: -36px; --burst-y:   6px; --burst-scale: 1.0; }
+.impact-burst.active .burst-4 { animation-delay: 30ms;  --burst-x:  34px; --burst-y:  10px; --burst-scale: 1.2; }
+.impact-burst.active .burst-5 { animation-delay: 15ms;  --burst-x:   4px; --burst-y: -42px; --burst-scale: 0.6; }
+.impact-burst.active .burst-6 { animation-delay: 35ms;  --burst-x: -16px; --burst-y:  28px; --burst-scale: 1.0; }
+.impact-burst.active .burst-7 { animation-delay: 10ms;  --burst-x:  30px; --burst-y: -14px; --burst-scale: 0.7; }
+.impact-burst.active .burst-8 { animation-delay: 50ms;  --burst-x:  14px; --burst-y:  24px; --burst-scale: 0.9; }
+
+@keyframes burst-fly {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(0);
+  }
+  40% {
+    opacity: 1;
+    transform: translate(calc(var(--burst-x) * 0.7), calc(var(--burst-y) * 0.7)) scale(var(--burst-scale));
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--burst-x), var(--burst-y)) scale(0.2);
+  }
+}
+
+/* ═══ Tool Pills — logo + text at impact point ═══ */
+.tool-pill {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px 6px 8px;
+  border-radius: 20px;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  opacity: 0;
+  /* Moved 48px down vertically */
+  transform: translate(-50%, calc(-50% + 56px)) scale(0);
+  transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+  z-index: 20;
+}
+
+.tool-pill.show {
+  opacity: 1;
+  transform: translate(-50%, calc(-50% + 56px)) scale(1);
+}
+
+.pill-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* Claude pill — orange theme */
+.pill-claude {
+  background: #D97757;
+  color: #fff;
+  box-shadow: 0 2px 12px rgba(217, 119, 87, 0.45);
+}
+
+/* Figma pill — purple theme */
+.pill-figma {
+  background: #A259FF;
+  color: #fff;
+  box-shadow: 0 2px 12px rgba(162, 89, 255, 0.45);
+}
+
+/* Dark mode: slightly brighten the pills */
+[data-theme="dark"] .pill-claude {
+  background: #E8845F;
+  box-shadow: 0 2px 16px rgba(232, 132, 95, 0.5);
+}
+
+[data-theme="dark"] .pill-figma {
+  background: #B06AF0;
+  box-shadow: 0 2px 16px rgba(176, 106, 240, 0.5);
+}
+
+/* ═══ Responsive ═══ */
+@media (max-width: 1024px) {
+  .hero-content {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+    align-items: center;
+  }
+  .hero-name {
+    font-size: clamp(48px, 12vw, 80px);
+  }
+  .anim-wrap {
+    max-width: 420px;
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+}
