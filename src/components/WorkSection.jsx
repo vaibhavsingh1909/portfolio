@@ -59,20 +59,25 @@ export default function WorkSection() {
         {projects.map((proj, idx) => {
           const isOpen = openId === proj.id;
           return (
-            <article 
-              key={proj.id} 
-              className={`work-article ${isOpen ? 'expanded' : ''} hover-target`}
-              onClick={() => toggle(proj.id)}
+            <article
+              key={proj.id}
+              className={`work-article ${isOpen ? 'expanded' : ''}`}
             >
-              <div className="work-header">
+              <button
+                type="button"
+                className="work-header hover-target"
+                onClick={() => toggle(proj.id)}
+                aria-expanded={isOpen}
+                aria-controls={`work-content-${proj.id}`}
+              >
                 <span className="work-number">No. 0{idx + 1}</span>
                 <h4 className="work-headline">{proj.title}</h4>
-                <div className="work-toggle-icon">
+                <span className="work-toggle-icon" aria-hidden="true">
                   {isOpen ? <X size={16} strokeWidth={1.5} /> : <Plus size={16} strokeWidth={1.5} />}
-                </div>
-              </div>
+                </span>
+              </button>
               
-              <div className="work-content">
+              <div className="work-content" id={`work-content-${proj.id}`} role="region">
                 <div>
                 <p className="work-desc">{proj.desc}</p>
 

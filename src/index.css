@@ -63,9 +63,15 @@ body {
   font-family: var(--font-serif-body);
   font-size: var(--text-base);
   line-height: 1.7;
-  cursor: none;
   transition: background 0.5s ease, color 0.5s ease;
   overflow-x: hidden;
+}
+
+/* Custom cursor only when JS has confirmed fine pointer + no reduced motion */
+.has-custom-cursor body,
+.has-custom-cursor a,
+.has-custom-cursor button {
+  cursor: none;
 }
 
 .newspaper-layout {
@@ -88,7 +94,6 @@ h1, h2, h3, h4, h5, h6 {
 a {
   color: var(--ink);
   text-decoration: none;
-  cursor: none;
 }
 
 img, svg {
@@ -101,11 +106,12 @@ button {
   border: none;
   font-family: inherit;
   color: inherit;
-  cursor: none;
+  cursor: pointer;
 }
 
 /* ═══ Custom Cursor ═══ */
 .cursor-dot {
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -115,9 +121,13 @@ button {
   border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
-  transform: translate(-50%, -50%);
+  will-change: transform;
   transition: width 0.25s ease, height 0.25s ease, background-color 0.25s ease, border 0.25s ease;
   mix-blend-mode: difference;
+}
+
+.has-custom-cursor .cursor-dot {
+  display: block;
 }
 
 .cursor-dot.hovering {
@@ -126,6 +136,62 @@ button {
   background-color: transparent;
   border: 1.5px solid var(--accent);
   mix-blend-mode: normal;
+}
+
+/* ═══ Scroll progress bar ═══ */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  z-index: 100;
+  transition: transform 0.08s linear;
+  pointer-events: none;
+}
+
+/* ═══ Skip link (a11y) ═══ */
+.skip-link {
+  position: fixed;
+  top: -100px;
+  left: 1rem;
+  z-index: 200;
+  background: var(--ink);
+  color: var(--bg);
+  padding: 0.6rem 1rem;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  border-radius: 4px;
+  transition: top 0.25s ease;
+}
+
+.skip-link:focus {
+  top: 1rem;
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ═══ Focus visible ═══ */
+:focus {
+  outline: none;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ═══ Selection ═══ */
+::selection {
+  background: var(--accent);
+  color: var(--bg);
 }
 
 /* ═══ Layout ═══ */
@@ -202,5 +268,22 @@ button {
 @media (max-width: 768px) {
   :root {
     --space-section: 3rem;
+  }
+  body {
+    line-height: 1.65;
+  }
+}
+
+/* ═══ Reduced motion ═══ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }

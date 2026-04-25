@@ -34,7 +34,6 @@
 
 .work-article {
   border-bottom: 1px solid var(--rule-light);
-  cursor: none;
   transition: background 0.3s ease, border-left-color 0.3s ease;
   border-left: 3px solid transparent;
 }
@@ -47,13 +46,29 @@
   background: var(--accent-soft);
 }
 
-/* ── Header Row ── */
+/* ── Header Row (now a button) ── */
 .work-header {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  font: inherit;
+  color: inherit;
   padding: var(--space-md) var(--space-sm) var(--space-md) var(--space-md);
   display: grid;
   grid-template-columns: 60px 1fr auto;
   align-items: center;
   gap: var(--space-xs);
+  transition: padding-left 0.25s ease;
+}
+
+.work-header:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.work-article:hover .work-headline {
+  color: var(--accent);
 }
 
 .work-number {
