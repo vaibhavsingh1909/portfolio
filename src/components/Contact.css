@@ -1,0 +1,108 @@
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  padding: var(--space-lg) 0 var(--space-xl);
+}
+
+.contact-editorial {
+  border-right: 1px solid var(--rule-light);
+  padding-right: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.contact-editorial .headline-massive {
+  font-size: var(--text-2xl);
+  line-height: 1.15;
+  margin-bottom: var(--space-md);
+}
+
+.contact-editorial .lead-paragraph {
+  color: var(--ink-secondary);
+}
+
+/* ═══ Directory ═══ */
+.directory-title {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: var(--space-xs);
+  margin-bottom: var(--space-md);
+  font-weight: 600;
+}
+
+[data-theme="dark"] .directory-title {
+  border-bottom-color: var(--rule);
+}
+
+.directory-list {
+  list-style: none;
+  font-family: var(--font-serif-body);
+}
+
+.directory-list li {
+  border-bottom: 1px solid var(--rule-light);
+}
+
+.directory-list li:last-child {
+  border-bottom: none;
+}
+
+.directory-list li a {
+  display: grid;
+  grid-template-columns: 36px 1fr auto;
+  align-items: center;
+  padding: var(--space-md) var(--space-xs);
+  transition: all 0.3s ease;
+  border-radius: 4px;
+}
+
+.directory-list li a:hover {
+  color: var(--accent);
+  padding-left: var(--space-sm);
+  background: var(--accent-soft);
+}
+
+.contact-icon {
+  color: var(--muted);
+  transition: color 0.3s;
+}
+
+.directory-list li a:hover .contact-icon {
+  color: var(--accent);
+}
+
+.contact-label {
+  font-size: var(--text-base);
+  font-weight: 600;
+}
+
+.contact-action {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.directory-list li a:hover .contact-action {
+  color: var(--accent);
+}
+
+@media (max-width: 900px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+  .contact-editorial {
+    border-right: none;
+    padding-right: 0;
+  }
+}
