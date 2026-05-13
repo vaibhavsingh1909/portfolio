@@ -1,70 +1,39 @@
-import './Experience.css';
+const roles = [
+  {
+    date: 'Aug 2024 — Present',
+    role: 'Product Designer',
+    company: 'Perforce Software (Delphix Portfolio)',
+    context: 'Leading product design for Continuous Compliance, a data privacy SaaS portfolio used by enterprise teams. Partnering with PM and engineering across India, the US, and EMEA; strengthening the design system and building Figma plugins that reduce repetitive design work.',
+  },
+  {
+    date: 'Jun 2024 — Jul 2024',
+    role: 'Product Designer',
+    company: 'Credflow',
+    context: 'Designed a B2B credit-line product for SMEs across underwriting, onboarding, and risk workflows. Shipped mobile-first journeys focused on activation, comprehension, and trust in high-stakes financial decisions.',
+  },
+  {
+    date: 'Jul 2021 — May 2023',
+    role: 'Associate UX/UI Designer',
+    company: 'Hatio Tech (Billdesk subsidiary)',
+    context: 'Designed crypto exchange, payout, wallet, and neobanking experiences from early IA to production UI across web, iOS, and Android. Ran prototype reviews and usability checks to validate interaction patterns before engineering handoff.',
+  },
+];
 
 export default function Experience() {
   return (
-    <section id="experience" className="editorial-section col-span-12 reveal visible">
-      <div className="section-heading-row">
-        <h3 className="section-title">Career History</h3>
-      </div>
-      
-      <div className="experience-list">
-        <div className="exp-row">
-          <div className="exp-meta">
-            <span className="exp-date">Aug 2024 — Present</span>
-            <span className="exp-status">Current</span>
+    <section id="experience">
+      <h2 className="section-label">Experience</h2>
+      <div className="exp-list">
+        {roles.map((r) => (
+          <div className="exp-row" key={r.date}>
+            <div>
+              <div className="exp-role">{r.role}</div>
+              <div className="exp-company">{r.company}</div>
+              <p className="exp-context">{r.context}</p>
+            </div>
+            <div className="exp-date">{r.date}</div>
           </div>
-          <div className="exp-details">
-            <h4 className="exp-role">Product Designer</h4>
-            <span className="exp-company">Perforce Software (Delphix Portfolio)</span>
-            <ul className="exp-points">
-              <li>Designing across a large multi-product SaaS portfolio; major redesign initiatives for usability and accessibility.</li>
-              <li>Lead design for Continuous Compliance — transforming complex data privacy workflows into intuitive interfaces.</li>
-              <li>Collaborated with PMs and engineering across India, US, and EMEA.</li>
-              <li>Strengthened internal design system with reusable patterns and unified components.</li>
-              <li>Created Figma plugins to improve workflow efficiency.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="exp-row">
-          <div className="exp-meta">
-            <span className="exp-date">Jun 2024 — July 2024</span>
-          </div>
-          <div className="exp-details">
-            <h4 className="exp-role">Product Designer</h4>
-            <span className="exp-company">Credflow</span>
-            <ul className="exp-points">
-              <li>Designed core journeys for B2B fintech products offering credit lines to SMEs.</li>
-              <li>End-to-end design for underwriting, onboarding, and risk workflows.</li>
-              <li>Delivered mobile-first experiences that increased user activation.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="exp-row">
-          <div className="exp-meta">
-            <span className="exp-date">Jul 2021 — May 2023</span>
-          </div>
-          <div className="exp-details">
-            <h4 className="exp-role">Associate UX/UI Designer</h4>
-            <span className="exp-company">Hatio Tech (Billdesk Subsidiary)</span>
-            <ul className="exp-points">
-              <li>Designed features for Billdesk's operations and internal SaaS platforms.</li>
-              <li>Built a cryptocurrency exchange from scratch — trading, token discovery, Web3 experiences.</li>
-              <li>Shaped IA, wireframes, and UI for a consumer fintech product across web, iOS, Android.</li>
-              <li>Ran prototype tests to validate usability and interaction patterns.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div className="education-box">
-        <h4 className="edu-title">Education & Certifications</h4>
-        <div className="edu-items">
-          <span className="edu-item">BE — Mechanical Engineering</span>
-          <span className="edu-item">Interaction Design Foundation</span>
-          <span className="edu-item">Product Management Certification</span>
-        </div>
+        ))}
       </div>
     </section>
   );

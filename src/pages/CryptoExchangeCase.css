@@ -1,0 +1,392 @@
+/* Coinome / Crypto Exchange case study — scoped under .coinome-page */
+
+.coinome-page {
+  --bg: #ffffff;
+  --fg: #111111;
+  --body: #666666;
+  --line: rgba(0, 0, 0, 0.08);
+  --tag-bg: #f1f1f4;
+  --note-border: #fec660;
+  --note-title: #ad7c1c;
+  --note-body: #868d97;
+  --teal: #008080;
+  --primary: #0a0a0a;
+  --light-grey: #f5f5f7;
+  --soft-grey: #f9f9fb;
+  --purple: #8986f9;
+
+  background: var(--bg);
+  color: var(--body);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 18px;
+  line-height: 1.8;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+.coinome-page * { box-sizing: border-box; }
+.coinome-page a { color: inherit; text-decoration: none; }
+
+/* ───── Magazine masthead ───── */
+.coinome-page .magazine-header {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 60px 64px 0;
+}
+@media (max-width: 1280px) {
+  .coinome-page .magazine-header { padding: 48px 40px 0; }
+}
+@media (max-width: 760px) {
+  .coinome-page .magazine-header { padding: 40px 24px 0; }
+}
+.coinome-page .masthead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #000;
+}
+.coinome-page .masthead .title {
+  font-weight: 700;
+  font-size: 24px;
+  color: #1a1a1a;
+}
+.coinome-page .masthead .nav {
+  display: flex;
+  gap: 24px;
+  font-size: 16px;
+  color: #1a1a1a;
+}
+.coinome-page .masthead .nav a {
+  font-weight: 500;
+  transition: opacity 0.2s;
+}
+.coinome-page .masthead .nav a:hover { opacity: 0.6; }
+
+.coinome-page .sub-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+}
+.coinome-page .sub-row .back {
+  font-size: 16px;
+  color: #1a1a1a;
+  font-weight: 500;
+  transition: transform 0.2s;
+  display: inline-block;
+}
+.coinome-page .sub-row .back:hover { transform: translateX(-2px); }
+.coinome-page .scroll-cue {
+  font-weight: 500;
+  font-size: 16px;
+  color: #000;
+}
+.coinome-page .scroll-cue::after {
+  content: '↓';
+  margin-left: 8px;
+  display: inline-block;
+  animation: coinome-bounce 1.6s ease-in-out infinite;
+}
+@keyframes coinome-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
+}
+
+.coinome-page .hero-banner {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: 56px;
+}
+
+/* ───── Layout: side menu + article ───── */
+.coinome-page .layout {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 64px 64px;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 56px;
+  align-items: start;
+}
+@media (max-width: 1280px) {
+  .coinome-page .layout { padding: 56px 40px; gap: 40px; grid-template-columns: 180px 1fr; }
+}
+@media (max-width: 760px) {
+  .coinome-page .layout { grid-template-columns: 1fr; padding: 40px 24px; gap: 24px; }
+}
+
+/* ───── Sticky side menu ───── */
+.coinome-page .side-menu {
+  position: sticky;
+  top: 32px;
+  align-self: start;
+}
+.coinome-page .side-menu .menu-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 16px;
+  padding-left: 12px;
+}
+.coinome-page .side-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-left: 1px solid var(--line);
+}
+.coinome-page .side-menu li button {
+  display: block;
+  width: 100%;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 8px 12px;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: inherit;
+  color: #999;
+  border-left: 2px solid transparent;
+  margin-left: -1px;
+  transition: color 0.2s, border-color 0.2s;
+  line-height: 1.4;
+  text-align: left;
+  cursor: pointer;
+}
+.coinome-page .side-menu li button:hover { color: #111; opacity: 1; }
+.coinome-page .side-menu li button.active {
+  color: #111;
+  border-left-color: #111;
+}
+@media (max-width: 760px) {
+  .coinome-page .side-menu {
+    position: relative;
+    top: auto;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+  }
+  .coinome-page .side-menu .menu-label { display: none; }
+  .coinome-page .side-menu ul {
+    display: flex;
+    gap: 4px;
+    border-left: 0;
+    white-space: nowrap;
+  }
+  .coinome-page .side-menu li button {
+    border-left: 0;
+    border-bottom: 2px solid transparent;
+    padding: 8px 12px;
+  }
+  .coinome-page .side-menu li button.active {
+    border-left: 0;
+    border-bottom-color: #111;
+  }
+}
+
+/* ───── Article body ───── */
+.coinome-page article { max-width: 842px; }
+
+.coinome-page .tags {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+  list-style: none;
+  padding: 0;
+}
+.coinome-page .tag {
+  font-weight: 500;
+  font-size: 14px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--tag-bg);
+  color: #1a1a1a;
+}
+
+.coinome-page h1 {
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  color: #111;
+  margin: 0 0 32px;
+}
+@media (max-width: 600px) {
+  .coinome-page h1 { font-size: 32px; }
+}
+
+.coinome-page .lede {
+  font-size: 18px;
+  line-height: 1.8;
+  letter-spacing: -0.01em;
+  color: #666;
+  margin-bottom: 24px;
+}
+
+.coinome-page .note {
+  border: 1px solid var(--note-border);
+  border-radius: 6px;
+  padding: 14px 16px;
+  margin: 32px 0 56px;
+}
+.coinome-page .note .note-title {
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--note-title);
+  margin-bottom: 8px;
+}
+.coinome-page .note .note-body {
+  font-size: 16px;
+  color: var(--note-body);
+  line-height: 1.4;
+}
+
+.coinome-page section {
+  margin-bottom: 80px;
+  scroll-margin-top: 32px;
+}
+.coinome-page .case-opening {
+  margin-bottom: 64px;
+}
+.coinome-page section h2 {
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+  color: #111;
+  margin: 0 0 24px;
+}
+.coinome-page section h3 {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.6;
+  color: #111;
+  margin: 32px 0 12px;
+}
+.coinome-page section p {
+  font-size: 18px;
+  line-height: 1.8;
+  letter-spacing: -0.01em;
+  color: #666;
+  margin: 0 0 24px;
+  white-space: pre-line;
+}
+.coinome-page section p strong { color: #111; font-weight: 600; }
+
+.coinome-page .copy-list {
+  list-style: none;
+  margin: 0 0 32px;
+  padding: 0;
+}
+.coinome-page .copy-list li {
+  border-top: 1px solid var(--line);
+  color: #333;
+  font-size: 16px;
+  line-height: 1.65;
+  padding: 14px 0;
+}
+.coinome-page .copy-list li:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.coinome-page .divider {
+  height: 2px;
+  background: rgba(0, 0, 0, 0.08);
+  margin: 0 0 56px;
+  border: 0;
+}
+
+/* ───── Raw exported assets ───── */
+.coinome-page .raw-shot {
+  margin: 28px 0;
+}
+.coinome-page .raw-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.coinome-page .raw-shot--wide {
+  margin-bottom: 32px;
+}
+.coinome-page .raw-shot--narrow {
+  max-width: 360px;
+  margin: 0 auto 32px;
+}
+
+.coinome-page .image-grid {
+  display: grid;
+  gap: 28px;
+  margin: 32px 0 48px;
+  align-items: start;
+}
+.coinome-page .image-grid--one {
+  grid-template-columns: 1fr;
+}
+.coinome-page .image-grid--two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.coinome-page .image-grid--three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.coinome-page .image-grid .raw-shot {
+  margin: 0;
+}
+
+@media (max-width: 760px) {
+  .coinome-page .image-grid--two,
+  .coinome-page .image-grid--three {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ───── Pager ───── */
+.coinome-page .pager {
+  margin-top: 80px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+.coinome-page .pager a {
+  font-weight: 500;
+  font-size: 16px;
+  color: #1a1a1a;
+  transition: opacity 0.2s;
+}
+.coinome-page .pager a:hover { opacity: 0.6; }
+.coinome-page .pager .label {
+  font-size: 13px;
+  color: #999;
+  margin-bottom: 4px;
+  font-weight: 400;
+}
+.coinome-page .pager .next { text-align: right; }
+
+/* ───── Footer ───── */
+.coinome-page .coinome-footer {
+  max-width: 1280px;
+  margin: 80px auto 0;
+  padding: 32px 64px 48px;
+  border-top: 1px solid #000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: #1a1a1a;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+@media (max-width: 1280px) {
+  .coinome-page .coinome-footer { padding: 32px 40px 48px; }
+}
+@media (max-width: 760px) {
+  .coinome-page .coinome-footer { padding: 24px 24px 40px; }
+}
