@@ -1,7 +1,7 @@
 export default function Hero() {
   return (
     <section id="top" className="hero">
-      <p className="eyebrow">Product Designer · SaaS, fintech, compliance</p>
+      <p className="eyebrow">Product Designer · SaaS · fintech · compliance</p>
       <h1>
         Vaibhav Singh designs <em>clear, high-trust products</em> for complex workflows.
       </h1>
