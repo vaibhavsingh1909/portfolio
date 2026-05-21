@@ -8,6 +8,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import CryptoExchangeCase from './pages/CryptoExchangeCase';
 import PayoutModuleCase from './pages/PayoutModuleCase';
+import LosCase from './pages/LosCase';
 
 function getRoute() {
   return window.location.hash || '#/';
@@ -47,6 +48,9 @@ export default function App() {
   }
   if (route === '#/work/payout-module') {
     return <PayoutModuleCase />;
+  }
+  if (route === '#/work/los') {
+    return <LosCase />;
   }
   return <Home />;
 }

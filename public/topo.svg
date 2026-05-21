@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" fill="none">
+  <defs>
+    <path id="b" vector-effect="non-scaling-stroke"
+      d="M0,-280 C120,-285 245,-180 258,-55 C271,70 235,200 150,255 C60,310 -90,300 -185,235 C-280,170 -300,40 -270,-90 C-240,-220 -120,-275 0,-280 Z"/>
+  </defs>
+  <g stroke="#ffffff" stroke-width="1" stroke-opacity="0.06">
+    <use href="#b" transform="translate(1180 380) rotate(6) scale(0.18)"/>
+    <use href="#b" transform="translate(1180 380) rotate(6) scale(0.40)"/>
+    <use href="#b" transform="translate(1180 380) rotate(6) scale(0.62)"/>
+    <use href="#b" transform="translate(1180 380) rotate(6) scale(0.84)"/>
+    <use href="#b" transform="translate(1180 380) rotate(6) scale(1.06)"/>
+    <use href="#b" transform="translate(1180 380) rotate(6) scale(1.28)"/>
+    <use href="#b" transform="translate(1180 380) rotate(6) scale(1.50)"/>
+    <use href="#b" transform="translate(1180 380) rotate(6) scale(1.72)"/>
+    <use href="#b" transform="translate(1180 380) rotate(6) scale(1.94)"/>
+    <use href="#b" transform="translate(1180 380) rotate(6) scale(2.16)"/>
+    <use href="#b" transform="translate(1180 380) rotate(6) scale(2.38)"/>
+    <use href="#b" transform="translate(1180 380) rotate(6) scale(2.60)"/>
+    <use href="#b" transform="translate(220 840) rotate(42) scale(0.18)"/>
+    <use href="#b" transform="translate(220 840) rotate(42) scale(0.44)"/>
+    <use href="#b" transform="translate(220 840) rotate(42) scale(0.70)"/>
+    <use href="#b" transform="translate(220 840) rotate(42) scale(0.96)"/>
+    <use href="#b" transform="translate(220 840) rotate(42) scale(1.22)"/>
+    <use href="#b" transform="translate(220 840) rotate(42) scale(1.48)"/>
+    <use href="#b" transform="translate(220 840) rotate(42) scale(1.74)"/>
+    <use href="#b" transform="translate(220 840) rotate(42) scale(2.00)"/>
+    <use href="#b" transform="translate(220 840) rotate(42) scale(2.26)"/>
+    <use href="#b" transform="translate(680 30) rotate(-28) scale(0.18)"/>
+    <use href="#b" transform="translate(680 30) rotate(-28) scale(0.44)"/>
+    <use href="#b" transform="translate(680 30) rotate(-28) scale(0.70)"/>
+    <use href="#b" transform="translate(680 30) rotate(-28) scale(0.96)"/>
+    <use href="#b" transform="translate(680 30) rotate(-28) scale(1.22)"/>
+    <use href="#b" transform="translate(680 30) rotate(-28) scale(1.48)"/>
+    <use href="#b" transform="translate(680 30) rotate(-28) scale(1.74)"/>
+  </g>
+</svg>

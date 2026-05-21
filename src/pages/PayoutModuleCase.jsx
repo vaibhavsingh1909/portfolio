@@ -106,10 +106,6 @@ export default function PayoutModuleCase() {
       <header className="magazine-header">
         <div className="masthead">
           <div className="title">PORTFOLIO MAGAZINE</div>
-          <nav className="nav">
-            <a href="#/">Index</a>
-            <a href="mailto:hi@vaibhavsingh.info">Contact</a>
-          </nav>
         </div>
         <div className="sub-row">
           <a className="back" href="#/">← Go Back</a>
@@ -262,9 +258,9 @@ export default function PayoutModuleCase() {
               <div className="label">Previous case</div>
               ← Crypto exchange
             </a>
-            <a href="#/" className="next">
-              <div className="label">All work</div>
-              Index →
+            <a href="#/work/los" className="next">
+              <div className="label">Next case</div>
+              Loan Origination System →
             </a>
           </nav>
         </article>

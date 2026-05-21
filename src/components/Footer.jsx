@@ -4,16 +4,13 @@ export default function Footer() {
   return (
     <footer className="footer">
       <div className="footer-inner">
-        <div className="footer-col">
-          <span className="footer-brand">The Portfolio <em>Magazine</em></span>
-          <span>© {year} Vaibhav Singh. All rights reserved.</span>
-        </div>
-        <div className="footer-col">
-          <span>Product design for complex systems.</span>
-        </div>
-        <div className="footer-col footer-right">
-          <span>Printed in Pune, India</span>
-          <span>First Edition</span>
+        <div className="footer-simple">
+          <span>© {year} Vaibhav Singh · Pune, India</span>
+          <div className="footer-links">
+            <a href="mailto:vaibhavsingh1909@gmail.com">Email</a>
+            <a href="https://www.linkedin.com/in/vaibhav-singh-33967888/" target="_blank" rel="noreferrer">LinkedIn</a>
+            <a href="https://dribbble.com/vaibhavsingh1909" target="_blank" rel="noreferrer">Dribbble</a>
+          </div>
         </div>
       </div>
     </footer>
