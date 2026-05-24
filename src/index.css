@@ -264,7 +264,9 @@ span.hero-prop > img {
      6.5–8.0s  empty → loop */
 .hero-prop--fade {
   opacity: 0;
-  animation: 8s ease-in-out infinite;
+  animation-duration: 8s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
 }
 .hero-prop--research.hero-prop--fade {
   animation-name: researchSeq;
