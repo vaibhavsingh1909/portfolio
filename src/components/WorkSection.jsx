@@ -1,21 +1,8 @@
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 const projects = [
   {
     id: 1,
-    title: 'Loan Origination System',
-    company: 'Credflow',
-    year: '2024',
-    desc: 'Designed an internal credit workflow for Sales, Ops, and Underwriting, reducing ambiguity across onboarding, document review, and application status.',
-    eyebrow: 'Credit Workflow Design',
-    category: 'Fintech / Internal Tool',
-    cardColor: '#e8ddca',
-    inkColor: '#11100e',
-    media: '/LOS/Team%20Lead%20Screen/Loan%20Applications%20-%20Sales%20Lead.svg',
-    caseStudy: '#/work/los',
-  },
-  {
-    id: 2,
     title: 'Continuous Compliance',
     company: 'Perforce Software',
     year: '2024 — Present',
@@ -25,15 +12,34 @@ const projects = [
     cardColor: '#e6c7c2',
     inkColor: '#7a1620',
     nda: true,
+    current: [
+      'Designing the user interface for an API-first product, making it more accessible and usable.',
+      'Bringing CRUD workflow capabilities to the DCT platform.',
+      'Creating an experience that helps users migrate years of usage data and assets onto the new platform.',
+    ],
+  },
+  {
+    id: 2,
+    title: 'Loan Origination System',
+    company: 'Credflow',
+    year: '2024',
+    desc: 'Wireframes for an internal tool used by CredFlow’s Sales, Ops, and Underwriting teams — one shared pipeline across onboarding, document review, and application status.',
+    eyebrow: 'Internal Tool · Wireframes',
+    category: 'Fintech / Internal Tool',
+    cardColor: '#e8ddca',
+    inkColor: '#11100e',
+    media: '/Credit%20line%20for%20businesses/Credit%20line%20for%20businesses%20THUMBNAIL%201.png',
+    tinted: true,
+    caseStudy: '#/work/los',
   },
   {
     id: 3,
-    title: 'Neobanking Platform for SMBs',
+    title: 'Crypto Currency Exchange',
     company: 'Hatio Tech',
     year: '2021 — 2023',
-    desc: 'Designed 0 to 1 banking experiences across onboarding, alerts, invoicing, and account verification for sensitive financial setup.',
-    eyebrow: '0 to 1 Financial Product',
-    category: 'Neobanking / SMBs',
+    desc: 'Designed onboarding, bank-account verification, alerts, and coin-detail flows for Coinome — a regulated, India-first crypto exchange across web and mobile.',
+    eyebrow: 'Crypto Exchange · Web & Mobile',
+    category: 'Web3 / Crypto',
     cardColor: '#d9dfcf',
     inkColor: '#14201a',
     media: '/Crypto%20exchange/hero-banner.png',
@@ -41,6 +47,19 @@ const projects = [
   },
   {
     id: 4,
+    title: 'Credit Line for Businesses',
+    company: 'Credflow',
+    year: '2024',
+    desc: 'Designed mobile-first credit-line journeys for SMEs across activation, repayment clarity, underwriting states, and risk communication.',
+    eyebrow: 'SME Credit Product',
+    category: 'Fintech / Mobile',
+    cardColor: '#cddfe5',
+    inkColor: '#102b34',
+    media: '/Credit%20line%20for%20businesses/Credit%20line%20for%20businesses%20THUMBNAIL%202.png',
+    caseStudy: '#/work/credit-line',
+  },
+  {
+    id: 5,
     title: 'Fintech Wallet Payout Module',
     company: 'Hatio Tech',
     year: '2021 — 2023',
@@ -61,8 +80,9 @@ function ProjectAction({ project }) {
   }
 
   return (
-    <a href={project.caseStudy} className="work-cta-link">
-      Read case study <ArrowUpRight size={20} strokeWidth={1.75} aria-hidden="true" />
+    <a href={project.caseStudy} className="work-cta-link" aria-label="Read case study">
+      <span className="work-cta-text">Read case study</span>
+      <ArrowRight className="work-cta-icon" size={18} strokeWidth={1.75} aria-hidden="true" />
     </a>
   );
 }
@@ -70,52 +90,57 @@ function ProjectAction({ project }) {
 export default function WorkSection() {
   return (
     <section id="work" className="work-section">
-      <div className="section-head">
-        <h2 className="section-label">Selected Work</h2>
-        <p className="section-intro">
-          A few shipped stories across credit decisions, compliance workflows, neobanking, and
-          payment operations.
-        </p>
-      </div>
+      <h2 className="section-label">Selected Work</h2>
+      <p className="section-intro">
+        A few shipped stories across credit decisions, compliance workflows, crypto exchange, and
+        payment operations.
+      </p>
 
       <div className="work-list">
-        {projects.map((p, i) => (
+        {projects.map((p) => (
           <article
             className="work-item"
             key={p.id}
-            data-folder-style={['tab-left', 'stack', 'tab-right', 'tab-stack'][i]}
             style={{ '--card-color': p.cardColor, '--card-ink': p.inkColor }}
           >
             <div className="folder-tab" aria-hidden="true">{p.company}</div>
-            <div className="folder-stack" aria-hidden="true"></div>
 
             <div className="work-card-top">
               <p className="work-meta">{p.eyebrow}</p>
-              <p className="work-company">{p.company}</p>
+              <p className="work-category">{p.category}</p>
             </div>
 
             <div className="work-card-title-row">
               <div>
-                <p className="work-category">{p.category} · {p.year}</p>
                 <h3 className="work-title">{p.title}</h3>
               </div>
               <ProjectAction project={p} />
             </div>
 
-            <div className={`work-visual${p.mediaFit === 'contain' ? ' work-visual--contain' : ''}`}>
+            <div className={`work-visual${p.mediaFit ? ` work-visual--${p.mediaFit}` : ''}${p.tinted ? ' work-visual--tinted' : ''}`}>
               {p.media ? (
                 <img src={p.media} alt="" loading="lazy" />
               ) : (
-                <div className="work-visual-placeholder" aria-hidden="true">
-                  <span>Workflow under NDA</span>
-                  <strong>Patterns, review states, and compliance controls.</strong>
+                <div className="work-visual-placeholder">
+                  <div className="work-now">
+                    <span className="work-now-dot" aria-hidden="true" />
+                    <span className="work-now-label">Currently working here</span>
+                  </div>
+                  <p className="work-now-brief">{p.desc}</p>
+                  <ul className="work-now-list">
+                    {p.current.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
                 </div>
               )}
             </div>
 
-            <div className="work-card-bottom">
-              <p className="work-desc">{p.desc}</p>
-            </div>
+            {!p.nda && (
+              <div className="work-card-bottom">
+                <p className="work-desc">{p.desc}</p>
+              </div>
+            )}
           </article>
         ))}
       </div>

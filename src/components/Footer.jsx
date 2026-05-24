@@ -6,11 +6,7 @@ export default function Footer() {
       <div className="footer-inner">
         <div className="footer-simple">
           <span>© {year} Vaibhav Singh · Pune, India</span>
-          <div className="footer-links">
-            <a href="mailto:vaibhavsingh1909@gmail.com">Email</a>
-            <a href="https://www.linkedin.com/in/vaibhav-singh-33967888/" target="_blank" rel="noreferrer">LinkedIn</a>
-            <a href="https://dribbble.com/vaibhavsingh1909" target="_blank" rel="noreferrer">Dribbble</a>
-          </div>
+          <span className="footer-credit">Crafted in Claude Code</span>
         </div>
       </div>
     </footer>

@@ -406,29 +406,72 @@
   .coinome-page .coinome-footer { padding: 24px 24px 40px; }
 }
 
-/* ───── LOS case study — framed wireframe screens ───── */
+/* ───── LOS case study ───── */
 .los-page .case-opening .note + .note {
   margin-top: -28px;
 }
 
-.los-page .hero-banner,
-.los-page .raw-shot {
-  border: 1px solid var(--line);
+/* Hero banner: the thumbnail's cool mint-green is nudged warmer with a
+   subtle sepia filter + soft-light overlay so it sits with the cream palette. */
+.los-page .hero-banner {
+  position: relative;
+  margin: 56px 0 0;
   border-radius: 14px;
-  background: linear-gradient(142deg, #edf0f9 0%, #f4f2fb 50%, #e7eefb 100%);
+  overflow: hidden;
 }
-.los-page .hero-banner { padding: 34px; }
-.los-page .raw-shot { padding: 26px; }
-.los-page .image-grid .raw-shot { padding: 18px; }
-
-.los-page .raw-shot img {
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  box-shadow: 0 12px 32px rgba(24, 31, 72, 0.13);
+.los-page .hero-banner img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: sepia(0.25) saturate(0.92) hue-rotate(-14deg);
+}
+.los-page .hero-banner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: #b07a3f;
+  mix-blend-mode: soft-light;
+  opacity: 0.3;
 }
 
 @media (max-width: 760px) {
-  .los-page .hero-banner { padding: 18px; }
-  .los-page .raw-shot { padding: 16px; }
-  .los-page .image-grid .raw-shot { padding: 12px; }
+  .los-page .hero-banner { margin-top: 32px; }
+}
+
+/* ───── Credit line case study ───── */
+/* Hero banner is a wide composed thumbnail — render full-width, rounded. */
+.credit-line-page .credit-hero-banner {
+  margin: 56px 0 0;
+  border-radius: 14px;
+  overflow: hidden;
+}
+.credit-line-page .credit-hero-banner img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.credit-line-page .credit-phone-grid {
+  align-items: start;
+}
+
+.credit-line-page .credit-phone-shot {
+  margin: 0;
+}
+
+.credit-line-page .credit-phone-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.credit-line-page .credit-flow-group {
+  margin-top: 48px;
+}
+
+@media (max-width: 760px) {
+  .credit-line-page .credit-hero-banner {
+    margin-top: 32px;
+  }
 }

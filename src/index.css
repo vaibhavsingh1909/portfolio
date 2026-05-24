@@ -72,6 +72,9 @@ main {
 
 section + section { margin-top: clamp(4.5rem, 7vw, 6.5rem); }
 
+/* keep anchor-linked sections clear of the sticky nav when scrolled to */
+main > section { scroll-margin-top: 6rem; }
+
 /* ── Nav ───────────────────────────── */
 .nav {
   position: sticky;
@@ -359,14 +362,6 @@ span.hero-prop > img {
 }
 
 /* ── Section heading ───────────────── */
-.section-head {
-  display: grid;
-  grid-template-columns: 14rem minmax(0, 1fr);
-  gap: clamp(1.5rem, 5vw, 4rem);
-  align-items: start;
-  margin-bottom: 2rem;
-}
-
 .section-label {
   font-size: 0.75rem;
   text-transform: uppercase;
@@ -376,22 +371,12 @@ span.hero-prop > img {
   font-weight: 500;
 }
 
-.section-head .section-label {
-  margin-bottom: 0;
-}
-
 .section-intro {
   color: var(--muted);
   font-size: 1rem;
   line-height: 1.7;
   margin: -0.25rem 0 2rem;
   max-width: 46rem;
-}
-
-/* When .section-intro is inside the two-column .section-head grid, the
-   grid itself owns the bottom spacing — drop the intro's own margin. */
-.section-head .section-intro {
-  margin-bottom: 0;
 }
 
 /* ── Experience ────────────────────── */
@@ -442,15 +427,11 @@ span.hero-prop > img {
   border-bottom: 1px solid var(--rule);
 }
 
-.work-section .section-head {
+.work-section .section-label,
+.work-section .section-intro {
   max-width: var(--max);
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: clamp(2rem, 4vw, 3rem);
-}
-
-.work-section .section-label,
-.work-section .section-intro {
   color: var(--muted);
 }
 
@@ -464,6 +445,8 @@ span.hero-prop > img {
   perspective: 1200px;
 }
 
+/* ── Work cards rendered as file folders ──
+   Each card has an angled tab on the top-left. */
 .work-item {
   position: sticky;
   top: 6.5rem;
@@ -473,15 +456,48 @@ span.hero-prop > img {
   background: var(--card-color);
   color: var(--card-ink);
   box-shadow: 0 1.2rem 3rem rgba(0, 0, 0, 0.28);
+  /* room for the tab above the card */
+  margin-top: 1.85rem;
+}
+/* first card's tab is flush to the left corner, so square that corner;
+   the rest have staggered tabs and keep a normal rounded corner */
+.work-item:first-child { border-top-left-radius: 0; }
+
+/* the angled folder tab */
+.work-item .folder-tab {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  padding: 0.4rem 1.5rem 0.45rem 1.2rem;
+  background: var(--card-color);
+  color: color-mix(in srgb, var(--card-ink) 68%, transparent);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  border-radius: 10px 14px 0 0;
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 100%, 0 100%);
 }
 
 .work-item:nth-child(2) { top: 7.25rem; }
 .work-item:nth-child(3) { top: 8rem; }
 .work-item:nth-child(4) { top: 8.75rem; }
+.work-item:nth-child(5) { top: 9.5rem; }
+
+/* stagger the tabs horizontally like folders in a drawer, so each one
+   stays visible when the cards stack on scroll */
+.work-item:nth-child(1) .folder-tab { left: 0; }
+.work-item:nth-child(2) .folder-tab { left: 9rem; }
+.work-item:nth-child(3) .folder-tab { left: 18rem; }
+.work-item:nth-child(4) .folder-tab { left: 27rem; }
+.work-item:nth-child(5) .folder-tab { left: 36rem; }
+/* detached (staggered) tabs round their left corner too */
+.work-item:not(:first-child) .folder-tab { border-top-left-radius: 14px; }
 
 .work-card-top {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
   gap: 1rem;
   padding-bottom: 0.75rem;
   border-bottom: 1px solid color-mix(in srgb, var(--card-ink) 24%, transparent);
@@ -500,9 +516,9 @@ span.hero-prop > img {
   margin: 0;
 }
 
+/* company name now lives on the folder tab, so hide the in-card copy */
 .work-company {
-  text-align: right;
-  white-space: nowrap;
+  display: none;
 }
 
 .work-card-title-row {
@@ -516,9 +532,12 @@ span.hero-prop > img {
 .work-category {
   color: color-mix(in srgb, var(--card-ink) 68%, transparent);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.78rem;
+  font-size: clamp(0.72rem, 1.4vw, 0.95rem);
+  letter-spacing: 0.02em;
   line-height: 1.45;
-  margin: 0 0 0.45rem;
+  margin: 0;
+  text-align: right;
+  white-space: nowrap;
 }
 
 .work-title {
@@ -568,12 +587,43 @@ span.hero-prop > img {
   object-fit: contain;
 }
 
+.work-visual--phone {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: clamp(18rem, 42vw, 29rem);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.7), transparent 18rem),
+    linear-gradient(160deg, #f4f8ff 0%, #c2d5ea 100%);
+}
+.work-visual--phone img {
+  width: auto;
+  max-width: min(100%, 18rem);
+  height: clamp(18rem, 39vw, 28rem);
+  min-height: 0;
+  object-fit: contain;
+  object-position: top center;
+}
+
+/* warm tint for the LOS thumbnail so its cool green sits with the cream palette */
+.work-visual--tinted { position: relative; }
+.work-visual--tinted img { filter: sepia(0.25) saturate(0.92) hue-rotate(-14deg); }
+.work-visual--tinted::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: #b07a3f;
+  mix-blend-mode: soft-light;
+  opacity: 0.3;
+}
+
 .work-visual-placeholder {
   min-height: clamp(16rem, 42vw, 29rem);
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  gap: 1rem;
+  justify-content: center;
+  gap: 1.25rem;
   padding: clamp(1.5rem, 4vw, 3rem);
   background:
     radial-gradient(circle at 74% 30%, color-mix(in srgb, var(--card-ink) 18%, transparent), transparent 18rem),
@@ -582,39 +632,113 @@ span.hero-prop > img {
   color: var(--card-color);
 }
 
-.work-visual-placeholder span {
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.85rem;
+/* "Currently working here" status block inside the NDA placeholder */
+.work-now {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
-
-.work-visual-placeholder strong {
-  max-width: 16ch;
-  font-family: var(--sans);
-  font-size: clamp(1.25rem, 2.8vw, 2rem);
+.work-now-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: #3ecf8e;
+  box-shadow: 0 0 0 0 rgba(62, 207, 142, 0.55);
+  animation: nowPulse 2.4s ease-out infinite;
+  flex-shrink: 0;
+}
+@keyframes nowPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(62, 207, 142, 0.55); }
+  70%  { box-shadow: 0 0 0 0.5rem rgba(62, 207, 142, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(62, 207, 142, 0); }
+}
+.work-now-label {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  color: var(--card-color);
+}
+.work-now-brief {
+  font-size: clamp(1.05rem, 2.4vw, 1.5rem);
   font-weight: 400;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  max-width: 34ch;
+  margin: 0;
+}
+.work-now-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.work-now-list li {
+  padding: 0.7rem 0;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--card-color) 82%, transparent);
+  border-top: 1px solid color-mix(in srgb, var(--card-color) 22%, transparent);
 }
 
 .work-card-bottom {
   padding-top: 1rem;
 }
 
+/* CTA: a round arrow button that expands into a pill revealing the label
+   when its card is hovered (or the link is hovered/focused). */
 .work-cta-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2rem;
-  height: 2rem;
-  color: var(--card-ink);
-  font-size: 0;
+  gap: 0;
+  height: 2.1rem;
+  padding: 0 0.55rem;
+  border-radius: 999px;
+  /* frosted-glass pill: translucent ink fill + backdrop blur, matching the
+     sticky header's glass treatment. Solid-color fallback first for browsers
+     without backdrop-filter. */
+  background: var(--card-ink);
+  /* 78% keeps the frosted look while meeting WCAG AA (≥4.5:1) for the
+     light label across every card color */
+  background: color-mix(in srgb, var(--card-ink) 78%, transparent);
+  -webkit-backdrop-filter: saturate(180%) blur(8px);
+  backdrop-filter: saturate(180%) blur(8px);
+  border: 1px solid color-mix(in srgb, var(--card-color) 22%, transparent);
+  color: var(--card-color);
+  white-space: nowrap;
+  overflow: hidden;
   flex-shrink: 0;
+  transition: gap 0.35s ease, background-color 0.25s ease;
 }
-.work-cta-link svg {
-  width: 100%;
-  height: 100%;
+/* text is collapsed to zero width at rest, so only the arrow shows */
+.work-cta-text {
+  order: 1;
+  max-width: 0;
+  font-size: 0.85rem;
+  font-weight: 500;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-width 0.35s ease, opacity 0.2s ease;
 }
-.work-cta-link:hover { opacity: 0.72; }
+.work-cta-icon {
+  order: 2;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+.work-item:hover .work-cta-link,
+.work-cta-link:hover,
+.work-cta-link:focus-visible {
+  gap: 0.4rem;
+  background: color-mix(in srgb, var(--card-ink) 90%, transparent);
+}
+.work-item:hover .work-cta-text,
+.work-cta-link:hover .work-cta-text,
+.work-cta-link:focus-visible .work-cta-text {
+  max-width: 12rem;
+  opacity: 1;
+}
+.work-item:hover .work-cta-icon,
+.work-cta-link:hover .work-cta-icon,
+.work-cta-link:focus-visible .work-cta-icon { transform: rotate(-45deg); }
 
 .work-cta-muted {
   align-self: start;
@@ -1128,11 +1252,6 @@ span.hero-prop > img {
   /* hide the layered decorative props on small screens — their fixed-px
      offsets and small percentage widths collapse to unreadable shapes */
   .hero-prop { display: none; }
-  .section-head {
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
-    margin-bottom: 1.4rem;
-  }
   .exp-row {
     grid-template-columns: 1fr;
     gap: 0.25rem;
@@ -1148,17 +1267,22 @@ span.hero-prop > img {
     position: relative;
     top: auto;
     padding: 1rem;
+    border-top-left-radius: 0;
   }
   .work-item:nth-child(n) { top: auto; }
-  .work-card-top,
-  .work-card-title-row {
-    grid-template-columns: 1fr;
-  }
+  /* no stacking on mobile, so tabs sit flush-left on each card
+     (nth-child specificity matches the desktop stagger rules) */
+  .work-item:nth-child(n) .folder-tab { left: 0; border-top-left-radius: 0; }
   .work-card-top {
+    grid-template-columns: 1fr;
     flex-direction: column;
     gap: 0.25rem;
   }
-  .work-company {
+  .work-card-title-row {
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .work-category {
     text-align: left;
     white-space: normal;
   }
@@ -1171,7 +1295,6 @@ span.hero-prop > img {
   .work-desc {
     max-width: none;
   }
-  .work-cta-link,
   .work-cta-muted {
     width: auto;
     height: auto;
@@ -1179,11 +1302,19 @@ span.hero-prop > img {
     margin-top: 0;
     font-size: 0.88rem;
   }
+  /* on mobile the pill is always open: text shown, plain underlined link */
   .work-cta-link {
+    max-width: none;
+    height: auto;
+    padding: 0 0 1px;
+    background: none;
+    border-radius: 0;
     border-bottom: 1px solid currentColor;
-    padding-bottom: 1px;
+    overflow: visible;
+    font-size: 0.88rem;
   }
-  .work-cta-link svg {
+  .work-cta-text { opacity: 1; }
+  .work-cta-icon {
     width: 1rem;
     height: 1rem;
   }

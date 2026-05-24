@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './CryptoExchangeCase.css';
 
 const sections = [
-  { id: 'background', label: 'Background' },
+  { id: 'context', label: 'Context' },
   { id: 'workflow', label: 'Workflow' },
   { id: 'sales', label: 'Sales' },
   { id: 'onboarding', label: 'Onboarding' },
@@ -10,12 +10,11 @@ const sections = [
   { id: 'underwriting', label: 'Underwriting' },
   { id: 'activity-log', label: 'Activity log' },
   { id: 'status-system', label: 'Status system' },
-  { id: 'conclusion', label: 'Conclusion' },
 ];
 
 const tags = ['#Work', '#Web', '#Fintech', '#Internal tool', '#Figma'];
 
-const heroBanner = 'Team Lead Screen/Loan Applications - Sales Lead.svg';
+const heroBanner = '/Credit%20line%20for%20businesses/Credit%20line%20for%20businesses%20THUMBNAIL%201.png';
 
 const salesScreen = 'Team Lead Screen/Loan Applications - Sales Lead-1.svg';
 
@@ -111,11 +110,12 @@ export default function LosCase() {
           <a className="back" href="#/">← Go Back</a>
           <span className="scroll-cue">Scroll to Navigate</span>
         </div>
-        <img
-          className="hero-banner"
-          src={asset(heroBanner)}
-          alt="CredFlow Loan Origination System case study cover"
-        />
+        <figure className="hero-banner">
+          <img
+            src={heroBanner}
+            alt="CredFlow Loan Origination System case study cover"
+          />
+        </figure>
       </header>
 
       <div className="layout">
@@ -146,148 +146,112 @@ export default function LosCase() {
 
             <h1>Loan Origination System</h1>
             <p className="lede">
-              CredFlow&apos;s Loan Origination System is the internal workspace where a
-              business-loan application travels from a sales agent&apos;s first entry all the way
-              to disbursal.
-            </p>
-            <p className="lede">
-              One application, three teams — Sales, Ops, and Underwriting — each checking,
-              correcting, and approving the file before it can move on.
+              An internal tool for CredFlow&apos;s Sales, Ops, and Underwriting teams — one shared
+              pipeline that moves a business-loan application from a sales agent&apos;s first entry
+              all the way to disbursal.
             </p>
 
             <div className="note">
-              <div className="note-title">Team / My Role</div>
+              <div className="note-title">Role &amp; note</div>
               <div className="note-body">
-                I owned the end-to-end UX — research with the Sales, Ops, and Underwriting teams,
-                workflow mapping, and wireframes — turning a hand-off-heavy process into one
-                shared, trackable pipeline.
-              </div>
-            </div>
-            <div className="note">
-              <div className="note-title">Note</div>
-              <div className="note-body">
-                The screens shown in this case study are wireframes — used to align the three
-                teams and validate the flow — not the final production UI.
+                I owned the end-to-end UX — research with the three teams, workflow mapping, and the
+                screens below. These are <strong>wireframes</strong> used to align the teams and
+                validate the flow, not the final production UI.
               </div>
             </div>
           </section>
 
-          <section id="background">
-            <h2>Background</h2>
+          <section id="context">
+            <h2>Context</h2>
             <p>
-              CredFlow is a B2B fintech that gives Indian SMEs access to credit and cash-flow
-              products. Loan applications used to be processed across chat, email, and
-              spreadsheets — there was no single place that showed where a file stood or who was
-              holding it.
-            </p>
-
-            <h3>Why this project?</h3>
-            <p>
-              A loan application is touched by several teams before it is approved. Without a
-              system of record, files stalled silently, documents went missing, and no one could
-              answer a simple question: where is this application right now? The LOS was built to
-              bring the whole journey into one internal tool.
+              Loan applications used to move across chat, email, and spreadsheets, with no single
+              place that showed where a file stood or who was holding it. The LOS brings the whole
+              journey into one internal workspace, so any team can answer the obvious question —
+              where is this application right now?
             </p>
           </section>
 
           <section id="workflow">
             <h2>How an application moves</h2>
             <p>
-              An application is rarely linear. It moves forward when it is clean and backward the
-              moment something is missing. Each team owns a clear stage, and any team can send the
-              file back — the status is the single source of truth they all read from.
+              An application moves forward when it&apos;s clean and back the moment something is
+              missing. Each team owns a clear stage, and any team can return the file — the status
+              is the single source of truth they all read from.
             </p>
             <ul className="copy-list">
-              <li><strong>Sales:</strong> captures the application, owns the borrower relationship, and fixes anything that gets sent back.</li>
-              <li><strong>Ops:</strong> verifies every document — KYC, bank statements, business proofs — then approves or returns the file.</li>
-              <li><strong>Underwriting:</strong> reviews the financials and risk, then approves the file for lending.</li>
+              <li><strong>Sales</strong> — captures the application and fixes anything sent back.</li>
+              <li><strong>Ops</strong> — verifies every document, then approves or returns the file.</li>
+              <li><strong>Underwriting</strong> — reviews the financials and risk, then approves for lending.</li>
             </ul>
           </section>
 
           <section id="sales">
             <h2>Sales — Loan applications</h2>
             <p>
-              The Sales Lead&apos;s home screen is a single list of every live application — ID,
-              company, PAN, turnover, and status — with filters for status, date, and agent. From
-              here a lead can see what is stuck, what is with Ops, and what has been sent back for
-              correction.
+              The Sales Lead&apos;s home is a single list of every live application — ID, company,
+              PAN, turnover, status — with filters for status, date, and agent, so it&apos;s clear
+              what&apos;s stuck, what&apos;s with Ops, and what&apos;s been sent back.
             </p>
+            <h3>Loan applications list</h3>
             <Shot src={salesScreen} alt="Sales Lead loan applications list" />
           </section>
 
           <section id="onboarding">
             <h2>Customer onboarding</h2>
             <p>
-              Each application opens into a structured onboarding file, broken into clear sections
-              — basic details, business and financial documents, KYC, co-applicant, partner KYC,
-              and additional documents. Every section carries its own completion count, so a sales
-              agent always knows what is left to collect.
+              Each application opens into a structured file — basic details, business and financial
+              documents, KYC, co-applicant, partner KYC — each section carrying its own completion
+              count. The form adapts to the borrower&apos;s constitution type, so no one collects
+              documents that don&apos;t apply.
             </p>
-            <p>
-              The form also adapts to the borrower&apos;s constitution type — a proprietorship and
-              a private limited company are asked for different proofs, so no one wastes time on
-              documents that do not apply.
-            </p>
+            <h3>Document sections &amp; states</h3>
             <ImageGrid items={onboardingScreens} columns="two" />
           </section>
 
           <section id="ops">
             <h2>Ops — Document verification</h2>
             <p>
-              When a file reaches Ops, every uploaded document lands in a verification view: a
-              system-verified flag, an Ops action, and approve or reupload controls for each
-              document. Ops clears the clean documents, flags the rest, and sends the file back to
-              Sales with comments — no email, no guesswork.
+              Every uploaded document lands in a verification view with a system-verified flag and
+              approve or reupload controls. Ops clears the clean documents, flags the rest, and
+              sends the file back to Sales with comments — no email, no guesswork.
             </p>
+            <h3>Verification &amp; reupload</h3>
             <ImageGrid items={opsScreens} columns="two" />
           </section>
 
           <section id="underwriting">
             <h2>Underwriting — Financial review</h2>
             <p>
-              Underwriting works from the financial picture — balance sheet, ITR, bank statement
-              analysis, GSTR-3B, the CAM model, and the bureau report — each verified before a
-              decision is made. The review screen keeps the mandatory checklist and supporting
-              documents side by side, so an underwriter can move from evidence to decision without
-              leaving the file.
+              Underwriting works from the financial picture — balance sheet, ITR, bank-statement
+              analysis, GSTR-3B, the CAM model, and the bureau report. The review screen keeps the
+              mandatory checklist and supporting documents side by side, so an underwriter moves
+              from evidence to decision without leaving the file.
             </p>
+            <h3>Checklist &amp; supporting documents</h3>
             <ImageGrid items={underwritingScreens} columns="two" />
           </section>
 
           <section id="activity-log">
             <h2>Activity log &amp; hand-offs</h2>
             <p>
-              Because a file passes through many hands, every action is timestamped against a
-              name. The activity log gives any team a quick answer to &ldquo;who touched this, and
-              when&rdquo; — making the back-and-forth between Sales and Ops auditable instead of
-              invisible.
+              Every action is timestamped against a name, so any team gets a quick answer to who
+              touched a file and when — making the back-and-forth between Sales and Ops auditable
+              instead of invisible.
             </p>
+            <h3>Timeline view</h3>
             <Shot src={activityScreen} alt="Application activity log timeline" />
           </section>
 
           <section id="status-system">
             <h2>One shared status language</h2>
             <p>
-              The whole pipeline runs on one set of statuses — KYC, Sent to Ops, Ops Rejected,
-              Sent back to Sales, Send to Underwriting, L1 and L2 Approved, Sent to Lender, and
-              Disbursed. Shared filters and a status-driven action button mean every team reads
-              and updates the same vocabulary, so a file&apos;s state is never ambiguous.
+              The whole pipeline runs on one set of statuses — from KYC and Sent to Ops through to
+              L1/L2 Approved, Sent to Lender, and Disbursed. Shared filters and a status-driven
+              action button mean every team reads and updates the same vocabulary, so a file&apos;s
+              state is never ambiguous.
             </p>
+            <h3>Statuses &amp; button states</h3>
             <Shot src={statusScreen} alt="Status, filter, and button-state system" />
-          </section>
-
-          <section id="conclusion">
-            <h2>Conclusion</h2>
-            <p>
-              The LOS replaced a scattered, hand-off-heavy process with one pipeline every team
-              could see. Sales, Ops, and Underwriting now work from the same file and the same
-              statuses, and an application&apos;s location is always answerable.
-            </p>
-            <p>
-              If I were taking it further, I would track time-per-stage, the send-back rate
-              between Sales and Ops, and document-rejection reasons — the signals that show
-              whether the pipeline is genuinely faster, not just more visible.
-            </p>
           </section>
 
           <nav className="pager">
@@ -295,9 +259,9 @@ export default function LosCase() {
               <div className="label">Previous case</div>
               ← Payout module
             </a>
-            <a href="#/" className="next">
-              <div className="label">All work</div>
-              Index →
+            <a href="#/work/credit-line" className="next">
+              <div className="label">Next case</div>
+              Credit Line →
             </a>
           </nav>
         </article>
