@@ -527,7 +527,7 @@ span.hero-prop > img {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 1rem;
-  align-items: start;
+  align-items: baseline;
   padding: clamp(0.9rem, 2vw, 1.35rem) 0 clamp(0.8rem, 1.8vw, 1.2rem);
 }
 
@@ -743,9 +743,9 @@ span.hero-prop > img {
 .work-cta-link:focus-visible .work-cta-icon { transform: rotate(-45deg); }
 
 .work-cta-muted {
-  align-self: start;
   color: color-mix(in srgb, var(--card-ink) 72%, transparent);
   font-size: 0.84rem;
+  line-height: 1.2;
   white-space: nowrap;
 }
 
