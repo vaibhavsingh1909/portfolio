@@ -246,8 +246,8 @@
 .coinome-page .note {
   border: 1px solid var(--note-border);
   border-radius: 6px;
-  padding: 14px 16px;
-  margin: 32px 0 56px;
+  padding: 16px;
+  margin: 32px 0 48px;
 }
 .coinome-page .note .note-title {
   font-weight: 500;
@@ -266,7 +266,10 @@
   scroll-margin-top: 32px;
 }
 .coinome-page .case-opening {
-  margin-bottom: 64px;
+  margin-bottom: 80px;
+}
+.coinome-page .case-opening > *:last-child {
+  margin-bottom: 0;
 }
 .coinome-page section h2 {
   font-weight: 700;
@@ -281,7 +284,7 @@
   font-size: 18px;
   line-height: 1.6;
   color: #111;
-  margin: 32px 0 12px;
+  margin: 32px 0 16px;
 }
 .coinome-page section p {
   font-size: 18px;
@@ -303,7 +306,7 @@
   color: #333;
   font-size: 16px;
   line-height: 1.65;
-  padding: 14px 0;
+  padding: 16px 0;
 }
 .coinome-page .copy-list li:last-child {
   border-bottom: 1px solid var(--line);
@@ -318,7 +321,7 @@
 
 /* ───── Raw exported assets ───── */
 .coinome-page .raw-shot {
-  margin: 28px 0;
+  margin: 32px 0;
 }
 .coinome-page .raw-shot img {
   display: block;
@@ -335,9 +338,9 @@
 
 .coinome-page .image-grid {
   display: grid;
-  gap: 28px;
+  gap: 32px;
   margin: 32px 0 48px;
-  align-items: start;
+  align-items: stretch;
 }
 .coinome-page .image-grid--one {
   grid-template-columns: 1fr;
@@ -350,6 +353,87 @@
 }
 .coinome-page .image-grid .raw-shot {
   margin: 0;
+}
+.coinome-page .image-grid .raw-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Equal-height rows: every cell in a two-col grid shares one fixed height,
+   so paired screens line up on a common top and bottom baseline. The image
+   is scaled with object-fit: contain — full aspect ratio preserved, never
+   cropped. Shorter screens scale down within the shared height; the page
+   background fills any remaining space so nothing looks like it floats. */
+.coinome-page .image-grid--two .raw-shot {
+  height: 70vh;
+  max-height: 720px;
+}
+.coinome-page .image-grid--two .raw-shot img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: top center;
+}
+
+/* Landscape pairs (short, wide screens ~981 tall): a shorter shared height
+   keeps both cells aligned without the tall portrait box. */
+.coinome-page .image-grid--landscape .raw-shot {
+  height: auto;
+  max-height: none;
+  aspect-ratio: 1444 / 981;
+}
+.coinome-page .image-grid--landscape .raw-shot img {
+  object-position: top left;
+}
+
+/* ───── Paired screen grid (two-per-row, equal height per row) ─────
+   Used for LOS screenshots. Each row is its own 2-col grid, so equal-height
+   alignment is local to that pair. Both cells keep the same width and share the
+   shorter screenshot's height, creating a clean desktop crop window. */
+.coinome-page .pair-grid {
+  margin: 32px 0 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.coinome-page .pair-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+  align-items: stretch;
+}
+.coinome-page .pair-row--single {
+  grid-template-columns: minmax(0, calc(50% - 16px));
+  justify-content: start;
+}
+/* Each cell's aspect ratio comes from --row-ratio (set per row by PairGrid), so
+   row heights scale with the container instead of the viewport. */
+.coinome-page .pair-row .raw-shot {
+  margin: 0;
+  min-height: 0;
+  aspect-ratio: var(--row-ratio, 1440 / 1100);
+  overflow: hidden;
+}
+/* Keep every screenshot full column width; taller partners are clipped at the
+   bottom on desktop so the pair shares one top and bottom baseline. */
+.coinome-page .pair-row .raw-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 760px) {
+  .coinome-page .pair-row,
+  .coinome-page .pair-row--single {
+    grid-template-columns: 1fr;
+  }
+  /* Stacked single column: drop the fixed aspect ratio so each image uses its
+     natural height (no per-row pairing to align), scaling fluidly to full width. */
+  .coinome-page .pair-row .raw-shot {
+    aspect-ratio: auto;
+    overflow: visible;
+  }
 }
 
 @media (max-width: 760px) {
@@ -408,7 +492,7 @@
 
 /* ───── LOS case study ───── */
 .los-page .case-opening .note + .note {
-  margin-top: -28px;
+  margin-top: -32px;
 }
 
 /* Hero banner: the thumbnail's cool mint-green is nudged warmer with a

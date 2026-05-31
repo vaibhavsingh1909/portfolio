@@ -12,37 +12,83 @@ const sections = [
   { id: 'status-system', label: 'Status system' },
 ];
 
-const tags = ['#Work', '#Web', '#Fintech', '#Internal tool', '#Figma'];
+const tags = ['#Work', '#Web', '#Fintech', '#Internal tool', '#Concept Wireframes'];
 
 const heroBanner = '/Credit%20line%20for%20businesses/Credit%20line%20for%20businesses%20THUMBNAIL%201.png';
 
-const salesScreen = 'Team Lead Screen/Loan Applications - Sales Lead-1.svg';
+// Sales — both ~980 tall and frame-fit (no overflow), so they pair cleanly
+// in a 2-col grid at equal height with no cropping.
+// "Sales Lead.svg" (1440×979) is the table; "Sales Lead-1.svg" (1444×981) is
+// the "Add New Application" modal screen.
+const salesTable = 'Team Lead Screen/Loan Applications - Sales Lead.svg';     // 1440×979
+const salesScreen = 'Team Lead Screen/Loan Applications - Sales Lead-1.svg';  // 1444×981
 
-const onboardingScreens = [
-  'TEAM SCREENS/Bank Statements.svg',
-  'TEAM SCREENS/Bank Statements-1.svg',
-  'TEAM SCREENS/Bank Statements-2.svg',
-  'TEAM SCREENS/Bank Statements-3.svg',
-  'TEAM SCREENS/Bank Statements-4.svg',
-  'TEAM SCREENS/Bank Statements-5.svg',
-  'TEAM SCREENS/Bank Statements-6.svg',
-  'TEAM SCREENS/Bank Statements-7.svg',
-  'TEAM SCREENS/Private Ltd.svg',
+// Onboarding overview table (1444×981, frame-fit) — first cell of the grid.
+// Replaces the old overflowing "Bank Statements.svg" (2122×981).
+const onboardingWide = 'TEAM SCREENS/Loan Applications - OPSLead.svg';   // 1444×981
+
+// Portrait onboarding screens (all 1440 wide) — pair in 2-col grid.
+// With the table (981) prepended, rows become:
+//   table+BS-1 | BS-2+BS-3 | BS-4+BS-7 | BS-5(1770)+Private Ltd(1721) | BS-6 lone
+// Rows pair near-equal native heights so each row's two images render the same
+// height with no crop. The two long screens are paired together; BS-6 is lone last.
+const onboardingPortrait = [
+  'TEAM SCREENS/Bank Statements-1.svg',   // 979
+  'TEAM SCREENS/Bank Statements-2.svg',   // 1006
+  'TEAM SCREENS/Bank Statements-3.svg',   // 1015
+  'TEAM SCREENS/Bank Statements-4.svg',   // 1021 — paired with BS-7 (closest short)
+  'TEAM SCREENS/Bank Statements-7.svg',   // 892
+  'TEAM SCREENS/Bank Statements-5.svg',   // 1770 — two long screens paired together
+  'TEAM SCREENS/Private Ltd.svg',         // 1721 — two long screens paired together
+  'TEAM SCREENS/Bank Statements-6.svg',   // 1180 — lone last image
 ];
 
-const opsScreens = [
-  'OPS/All Partner KYC Documents.svg',
-  'OPS/Bank Statements.svg',
-  'OPS/Bank Statements-1.svg',
-  'OPS/Bank Statements-2.svg',
+// Native dimensions used to size every LOS screenshot row from only the images
+// in that pair. Desktop pairs use the shorter rendered height so both visible
+// screenshots keep equal width and equal row height; mobile renders natural,
+// full-height images.
+const screenSizes = {
+  [salesTable]: { width: 1440, height: 979 },
+  [salesScreen]: { width: 1444, height: 981 },
+  [onboardingWide]: { width: 1444, height: 981 },
+  'TEAM SCREENS/Bank Statements-1.svg': { width: 1440, height: 979 },
+  'TEAM SCREENS/Bank Statements-2.svg': { width: 1440, height: 1006 },
+  'TEAM SCREENS/Bank Statements-3.svg': { width: 1440, height: 1015 },
+  'TEAM SCREENS/Bank Statements-4.svg': { width: 1440, height: 1021 },
+  'TEAM SCREENS/Bank Statements-6.svg': { width: 1440, height: 1180 },
+  'TEAM SCREENS/Bank Statements-5.svg': { width: 1440, height: 1770 },
+  'TEAM SCREENS/Private Ltd.svg': { width: 1440, height: 1721 },
+  'TEAM SCREENS/Bank Statements-7.svg': { width: 1440, height: 892 },
+  'OPS/Bank Statements.svg': { width: 1440, height: 1267 },
+  'OPS/All Partner KYC Documents.svg': { width: 1440, height: 1536 },
+  'OPS/Bank Statements-1.svg': { width: 1440, height: 1959 },
+  'OPS/Bank Statements-2.svg': { width: 1440, height: 2072 },
+  'UNDERWRITING TEAM/Bank Statements.svg': { width: 1440, height: 2278 },
+  'UNDERWRITING TEAM/Bank Statements-1.svg': { width: 1440, height: 1790 },
+  'UNDERWRITING TEAM/Bank Statements-2.svg': { width: 1440, height: 1501 },
+  'UNDERWRITING TEAM/Bank Statements-3.svg': { width: 1440, height: 1360 },
+  'UNDERWRITING TEAM/View.svg': { width: 1440, height: 955 },
+  'TEAM SCREENS/Activity Log.svg': { width: 1440, height: 892 },
+  'Dropdowns.svg': { width: 1177, height: 2434 },
+};
+
+// OPS — all 1440-wide portrait screens, paired in the 2-col grid.
+// Ordered so similar heights share a row.
+const opsPortrait = [
+  'OPS/Bank Statements.svg',                        // 1440×1267
+  'OPS/All Partner KYC Documents.svg',              // 1440×1536
+  'OPS/Bank Statements-1.svg',                      // 1440×1959
+  'OPS/Bank Statements-2.svg',                      // 1440×2072
 ];
 
+// Underwriting screens use the same two-per-row pattern, with View.svg landing
+// as the odd, left-aligned final image.
 const underwritingScreens = [
-  'UNDERWRITING TEAM/Bank Statements.svg',
-  'UNDERWRITING TEAM/Bank Statements-1.svg',
-  'UNDERWRITING TEAM/Bank Statements-2.svg',
-  'UNDERWRITING TEAM/Bank Statements-3.svg',
-  'UNDERWRITING TEAM/View.svg',
+  'UNDERWRITING TEAM/Bank Statements.svg',          // 1440×2278
+  'UNDERWRITING TEAM/Bank Statements-1.svg',        // 1440×1790
+  'UNDERWRITING TEAM/Bank Statements-2.svg',        // 1440×1501
+  'UNDERWRITING TEAM/Bank Statements-3.svg',        // 1440×1360
+  'UNDERWRITING TEAM/View.svg',                     // 1440×955
 ];
 
 const activityScreen = 'TEAM SCREENS/Activity Log.svg';
@@ -64,12 +110,35 @@ function Shot({ src, alt, className = '' }) {
   );
 }
 
-function ImageGrid({ items, columns = 'two' }) {
+// Renders screenshots two per row. Each desktop row gets its own height from
+// that pair only, preserving equal column widths and aligned row bottoms. A lone
+// trailing image stays left-aligned at one-column width.
+function PairGrid({ items }) {
+  const rows = [];
+  for (let i = 0; i < items.length; i += 2) {
+    rows.push(items.slice(i, i + 2));
+  }
   return (
-    <div className={`image-grid image-grid--${columns}`}>
-      {items.map((src) => (
-        <Shot key={src} src={src} />
-      ))}
+    <div className="pair-grid">
+      {rows.map((row) => {
+        const rowRatio = Math.max(
+          ...row.map((src) => {
+            const size = screenSizes[src] || { width: 1440, height: 1100 };
+            return size.width / size.height;
+          })
+        );
+        return (
+          <div
+            key={row[0]}
+            className={`pair-row${row.length === 1 ? ' pair-row--single' : ''}`}
+            style={{ '--row-ratio': `${rowRatio} / 1` }}
+          >
+            {row.map((src) => (
+              <Shot key={src} src={src} />
+            ))}
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -193,7 +262,7 @@ export default function LosCase() {
               what&apos;s stuck, what&apos;s with Ops, and what&apos;s been sent back.
             </p>
             <h3>Loan applications list</h3>
-            <Shot src={salesScreen} alt="Sales Lead loan applications list" />
+            <PairGrid items={[salesTable, salesScreen]} />
           </section>
 
           <section id="onboarding">
@@ -205,7 +274,7 @@ export default function LosCase() {
               documents that don&apos;t apply.
             </p>
             <h3>Document sections &amp; states</h3>
-            <ImageGrid items={onboardingScreens} columns="two" />
+            <PairGrid items={[onboardingWide, ...onboardingPortrait]} />
           </section>
 
           <section id="ops">
@@ -216,7 +285,7 @@ export default function LosCase() {
               sends the file back to Sales with comments — no email, no guesswork.
             </p>
             <h3>Verification &amp; reupload</h3>
-            <ImageGrid items={opsScreens} columns="two" />
+            <PairGrid items={opsPortrait} />
           </section>
 
           <section id="underwriting">
@@ -228,7 +297,7 @@ export default function LosCase() {
               from evidence to decision without leaving the file.
             </p>
             <h3>Checklist &amp; supporting documents</h3>
-            <ImageGrid items={underwritingScreens} columns="two" />
+            <PairGrid items={underwritingScreens} />
           </section>
 
           <section id="activity-log">
@@ -239,7 +308,7 @@ export default function LosCase() {
               instead of invisible.
             </p>
             <h3>Timeline view</h3>
-            <Shot src={activityScreen} alt="Application activity log timeline" />
+            <PairGrid items={[activityScreen]} />
           </section>
 
           <section id="status-system">
@@ -251,7 +320,7 @@ export default function LosCase() {
               state is never ambiguous.
             </p>
             <h3>Statuses &amp; button states</h3>
-            <Shot src={statusScreen} alt="Status, filter, and button-state system" />
+            <PairGrid items={[statusScreen]} />
           </section>
 
           <nav className="pager">
