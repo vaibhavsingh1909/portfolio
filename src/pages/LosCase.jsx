@@ -69,7 +69,6 @@ const screenSizes = {
   'UNDERWRITING TEAM/Bank Statements-3.svg': { width: 1440, height: 1360 },
   'UNDERWRITING TEAM/View.svg': { width: 1440, height: 955 },
   'TEAM SCREENS/Activity Log.svg': { width: 1440, height: 892 },
-  'Dropdowns.svg': { width: 1177, height: 2434 },
 };
 
 // OPS — all 1440-wide portrait screens, paired in the 2-col grid.
@@ -92,7 +91,6 @@ const underwritingScreens = [
 ];
 
 const activityScreen = 'TEAM SCREENS/Activity Log.svg';
-const statusScreen = 'Dropdowns.svg';
 
 function asset(path) {
   return `/LOS/${path.split('/').map(encodeURIComponent).join('/')}`;
@@ -319,8 +317,6 @@ export default function LosCase() {
               action button mean every team reads and updates the same vocabulary, so a file&apos;s
               state is never ambiguous.
             </p>
-            <h3>Statuses &amp; button states</h3>
-            <PairGrid items={[statusScreen]} />
           </section>
 
           <nav className="pager">
