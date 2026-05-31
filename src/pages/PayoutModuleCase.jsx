@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import './CryptoExchangeCase.css';
+import Footer from '../components/Footer';
 
 const sections = [
   { id: 'background', label: 'Background' },
@@ -10,7 +11,7 @@ const sections = [
   { id: 'conclusion', label: 'Conclusion' },
 ];
 
-const tags = ['#Work', '#Web', '#Figma'];
+const tags = ['#Work', '#Web', '#Fintech', '#Bulk payouts', '#Dashboard', '#Payments'];
 
 const initialScreens = [
   'screencapture-payouts-hatio-tech-dashboard-2021-09-16-14_10_04 2.svg',
@@ -33,12 +34,12 @@ const dashboardWireframes = [
 const dashboardFinal = [
   'Wallet-dashboard.svg',
   'Wallet-dashboard-1.svg',
-  'Wallet-dashboard-2.svg',
   'Wallet-dashboard-3.svg',
   'Wallet-dashboard-4.svg',
   'Wallet-dashboard-5.svg',
   'Wallet-dashboard-6.svg',
   'Sub Wallet-create.svg',
+  'Wallet-dashboard-2.svg',
 ];
 
 const bulkInitial = [
@@ -53,6 +54,35 @@ const bulkFinal = [
   'Payout detail popup-1.svg',
 ];
 
+const screenSizes = {
+  'screencapture-payouts-hatio-tech-dashboard-2021-09-16-14_10_04 2.svg': { width: 409, height: 204 },
+  'screencapture-payouts-hatio-tech-dashboard-2021-11-09-15_29_49.svg': { width: 409, height: 204 },
+  'screencapture-payouts-hatio-tech-payout-links-2021-11-10-10_08_21.svg': { width: 409, height: 204 },
+  'screencapture-payouts-hatio-tech-payout-links-2021-11-10-10_11_45.svg': { width: 409, height: 204 },
+  'screencapture-payouts-hatio-tech-payouts-2021-11-10-10_11_57.svg': { width: 409, height: 204 },
+  'screencapture-payouts-hatio-tech-payouts-bulk-2021-11-10-10_11_33.svg': { width: 409, height: 204 },
+  'Dashboard 64.svg': { width: 401, height: 247 },
+  'Dashboard 65.svg': { width: 405, height: 247 },
+  'Dashboard 66.svg': { width: 405, height: 247 },
+  'Sub-Wallet Details Page.svg': { width: 409, height: 247 },
+  'Wallet settings 2.svg': { width: 409, height: 247 },
+  'Suspend action.svg': { width: 401, height: 247 },
+  'Wallet-dashboard.svg': { width: 842, height: 527 },
+  'Wallet-dashboard-1.svg': { width: 842, height: 527 },
+  'Wallet-dashboard-2.svg': { width: 842, height: 1344 },
+  'Wallet-dashboard-3.svg': { width: 842, height: 492 },
+  'Wallet-dashboard-4.svg': { width: 842, height: 517 },
+  'Wallet-dashboard-5.svg': { width: 842, height: 517 },
+  'Wallet-dashboard-6.svg': { width: 842, height: 517 },
+  'Sub Wallet-create.svg': { width: 842, height: 916 },
+  'screencapture-payouts-hatio-xyz-payouts-bulk-2021-12-24-11_43_30.svg': { width: 409, height: 247 },
+  'screencapture-payouts-hatio-xyz-payouts-bulk-2021-12-24-11_43_42.svg': { width: 409, height: 247 },
+  'screencapture-payouts-hatio-xyz-payouts-bulk-2021-12-24-11_44_24.svg': { width: 409, height: 273 },
+  'screencapture-payouts-hatio-xyz-payouts-bulk-2021-12-24-11_45_00.svg': { width: 409, height: 273 },
+  'Payout detail popup.svg': { width: 842, height: 509 },
+  'Payout detail popup-1.svg': { width: 842, height: 509 },
+};
+
 function asset(name) {
   return `/bulk%20payout/${encodeURIComponent(name)}`;
 }
@@ -65,9 +95,40 @@ function Shot({ src, alt, className = '' }) {
   );
 }
 
-function ImageGrid({ items, columns = 'two' }) {
+function PairGrid({ items }) {
+  const rows = [];
+  for (let i = 0; i < items.length; i += 2) {
+    rows.push(items.slice(i, i + 2));
+  }
+
   return (
-    <div className={`image-grid image-grid--${columns}`}>
+    <div className="pair-grid">
+      {rows.map((row) => {
+        const rowRatio = Math.max(
+          ...row.map((src) => {
+            const size = screenSizes[src] || { width: 842, height: 527 };
+            return size.width / size.height;
+          })
+        );
+        return (
+          <div
+            key={row[0]}
+            className={`pair-row${row.length === 1 ? ' pair-row--single' : ''}`}
+            style={{ '--row-ratio': `${rowRatio} / 1` }}
+          >
+            {row.map((src) => (
+              <Shot key={src} src={src} />
+            ))}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function ImageStack({ items }) {
+  return (
+    <div className="full-shot-stack">
       {items.map((src) => (
         <Shot key={src} src={src} />
       ))}
@@ -102,7 +163,7 @@ export default function PayoutModuleCase() {
   };
 
   return (
-    <div className="coinome-page">
+    <div className="coinome-page payout-page">
       <header className="magazine-header">
         <div className="masthead">
           <div className="title">PORTFOLIO MAGAZINE</div>
@@ -188,7 +249,7 @@ export default function PayoutModuleCase() {
               generic and difficult to use at scale. The dashboard patterns needed clearer
               hierarchy, better navigation, and flows that supported real payout operations.
             </p>
-            <ImageGrid items={initialScreens} columns="two" />
+            <PairGrid items={initialScreens} />
           </section>
 
           <section id="customers">
@@ -211,14 +272,14 @@ export default function PayoutModuleCase() {
               wallets, wallet details, recent transactions, virtual accounts, sub-wallets, and
               transaction history.
             </p>
-            <ImageGrid items={dashboardWireframes} columns="three" />
+            <PairGrid items={dashboardWireframes} />
 
             <h3>Dashboard - Final screens</h3>
             <p>
               After multiple iterations and stakeholder reviews, these were the final dashboard
               screens deployed on Hatio.in.
             </p>
-            <ImageGrid items={dashboardFinal} columns="one" />
+            <ImageStack items={dashboardFinal} />
           </section>
 
           <section id="bulk-payouts">
@@ -229,7 +290,7 @@ export default function PayoutModuleCase() {
               flow. The experience made it harder for users to create and execute bulk payouts
               smoothly.
             </p>
-            <ImageGrid items={bulkInitial} columns="two" />
+            <PairGrid items={bulkInitial} />
 
             <h3>Bulk payouts - Final screens</h3>
             <p>
@@ -237,7 +298,7 @@ export default function PayoutModuleCase() {
               preview the upload, process the file, confirm payout details, and review status
               without unnecessary interruptions.
             </p>
-            <ImageGrid items={bulkFinal} columns="one" />
+            <ImageStack items={bulkFinal} />
           </section>
 
           <section id="conclusion">
@@ -254,22 +315,19 @@ export default function PayoutModuleCase() {
           </section>
 
           <nav className="pager">
-            <a href="#/work/crypto-exchange">
+            <a href="#/work/credit-line">
               <div className="label">Previous case</div>
-              ← Crypto exchange
+              ← Credit Line
             </a>
-            <a href="#/work/los" className="next">
-              <div className="label">Next case</div>
-              Loan Origination System →
+            <a href="#/" className="next">
+              <div className="label">All work</div>
+              Home page →
             </a>
           </nav>
         </article>
       </div>
 
-      <footer className="coinome-footer">
-        <span>© 2024 Vaibhav Singh · Portfolio Magazine</span>
-        <a href="mailto:hi@vaibhavsingh.info">hi@vaibhavsingh.info</a>
-      </footer>
+      <Footer />
     </div>
   );
 }

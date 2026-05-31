@@ -388,7 +388,7 @@
 }
 
 /* ───── Paired screen grid (two-per-row, equal height per row) ─────
-   Used for LOS screenshots. Each row is its own 2-col grid, so equal-height
+   Used for case-study screenshots. Each row is its own 2-col grid, so equal-height
    alignment is local to that pair. Both cells keep the same width and share the
    shorter screenshot's height, creating a clean desktop crop window. */
 .coinome-page .pair-grid {
@@ -418,6 +418,21 @@
 /* Keep every screenshot full column width; taller partners are clipped at the
    bottom on desktop so the pair shares one top and bottom baseline. */
 .coinome-page .pair-row .raw-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.coinome-page .full-shot-stack {
+  margin: 32px 0 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.coinome-page .full-shot-stack .raw-shot {
+  margin: 0;
+}
+.coinome-page .full-shot-stack .raw-shot img {
   display: block;
   width: 100%;
   height: auto;
@@ -469,25 +484,21 @@
 }
 .coinome-page .pager .next { text-align: right; }
 
-/* ───── Footer ───── */
-.coinome-page .coinome-footer {
+/* ───── Footer ─────
+   The shared site <Footer /> is reused on case-study pages. Its content is
+   bounded to the home-page width (--max, 1040px) by default; here we widen its
+   inner container to the case-study body bounds (the 1280px .layout container,
+   64px side padding) so the footer text aligns left/right with the article on
+   both sides instead of floating inset. */
+.coinome-page .footer-inner {
   max-width: 1280px;
-  margin: 80px auto 0;
-  padding: 32px 64px 48px;
-  border-top: 1px solid #000;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 14px;
-  color: #1a1a1a;
-  flex-wrap: wrap;
-  gap: 16px;
+  padding: 1.5rem 64px;
 }
 @media (max-width: 1280px) {
-  .coinome-page .coinome-footer { padding: 32px 40px 48px; }
+  .coinome-page .footer-inner { padding: 1.5rem 40px; }
 }
 @media (max-width: 760px) {
-  .coinome-page .coinome-footer { padding: 24px 24px 40px; }
+  .coinome-page .footer-inner { padding: 1.5rem 24px; }
 }
 
 /* ───── LOS case study ───── */

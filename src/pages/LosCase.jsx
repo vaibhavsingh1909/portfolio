@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import './CryptoExchangeCase.css';
+import Footer from '../components/Footer';
 
 const sections = [
   { id: 'context', label: 'Context' },
@@ -320,22 +321,19 @@ export default function LosCase() {
           </section>
 
           <nav className="pager">
-            <a href="#/work/payout-module">
-              <div className="label">Previous case</div>
-              ← Payout module
+            <a href="#/">
+              <div className="label">All work</div>
+              ← Home page
             </a>
-            <a href="#/work/credit-line" className="next">
+            <a href="#/work/crypto-exchange" className="next">
               <div className="label">Next case</div>
-              Credit Line →
+              Crypto exchange →
             </a>
           </nav>
         </article>
       </div>
 
-      <footer className="coinome-footer">
-        <span>© 2024 Vaibhav Singh · Portfolio Magazine</span>
-        <a href="mailto:hi@vaibhavsingh.info">hi@vaibhavsingh.info</a>
-      </footer>
+      <Footer />
     </div>
   );
 }
