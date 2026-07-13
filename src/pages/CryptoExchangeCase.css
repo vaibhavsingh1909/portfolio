@@ -570,3 +570,32 @@
     margin-top: 32px;
   }
 }
+
+/* ───── Enterprise download case study ───── */
+/* Composed cover thumbnail has its own rounded corners and gradient border
+   baked in (transparent PNG) — render at natural ratio, uncropped, and drop
+   the .los-page sepia/soft-light treatment plus its clipping container. */
+.download-page .hero-banner {
+  aspect-ratio: auto;
+  border-radius: 0;
+  overflow: visible;
+}
+.download-page .hero-banner img {
+  filter: none;
+}
+.download-page .hero-banner::after {
+  content: none;
+}
+
+/* Legacy page capture (3456×7110): rendered slim and centered so its endless
+   scroll height is the exhibit, without consuming the full article width. */
+.download-page .legacy-shot {
+  max-width: 420px;
+  margin: 32px auto 48px;
+}
+
+@media (max-width: 760px) {
+  .download-page .legacy-shot {
+    max-width: 320px;
+  }
+}

@@ -446,6 +446,15 @@ span.hero-prop > img {
   margin: 0 auto;
   perspective: 1200px;
 }
+/* Sticky runway: a card stays pinned only while it fits inside the list's
+   content box, so without extra room the last card can never reach its sticky
+   top, and the tallest pinned card gets shoved out early as the container
+   bottom catches it. This spacer row extends the content box so the last card
+   pins like the rest and the assembled stack holds before releasing. */
+.work-list::after {
+  content: "";
+  height: 18rem;
+}
 
 /* ── Work cards rendered as file folders ──
    Each card has an angled tab on the top-left. */
@@ -485,6 +494,7 @@ span.hero-prop > img {
 .work-item:nth-child(3) { top: 8rem; }
 .work-item:nth-child(4) { top: 8.75rem; }
 .work-item:nth-child(5) { top: 9.5rem; }
+.work-item:nth-child(6) { top: 10.25rem; }
 
 /* stagger the tabs horizontally like folders in a drawer, so each one
    stays visible when the cards stack on scroll */
@@ -493,6 +503,16 @@ span.hero-prop > img {
 .work-item:nth-child(3) .folder-tab { left: 18rem; }
 .work-item:nth-child(4) .folder-tab { left: 27rem; }
 .work-item:nth-child(5) .folder-tab { left: 36rem; }
+.work-item:nth-child(6) .folder-tab { left: 45rem; }
+/* six tabs at the full 9rem stagger overflow the card below ~960px (the
+   mobile reset only kicks in at 760px); tighten the drawer spacing there */
+@media (min-width: 761px) and (max-width: 960px) {
+  .work-item:nth-child(2) .folder-tab { left: 7rem; }
+  .work-item:nth-child(3) .folder-tab { left: 14rem; }
+  .work-item:nth-child(4) .folder-tab { left: 21rem; }
+  .work-item:nth-child(5) .folder-tab { left: 28rem; }
+  .work-item:nth-child(6) .folder-tab { left: 35rem; }
+}
 /* detached (staggered) tabs round their left corner too */
 .work-item:not(:first-child) .folder-tab { border-top-left-radius: 14px; }
 
@@ -562,7 +582,7 @@ span.hero-prop > img {
 .work-visual {
   overflow: hidden;
   min-height: clamp(16rem, 42vw, 29rem);
-  border-radius: 2px;
+  border-radius: 12px;
   background: #050505;
 }
 
@@ -575,10 +595,11 @@ span.hero-prop > img {
   object-position: top center;
 }
 
-/* For wide composed artwork that should never be cropped — show it whole.
-   The image carries its own blue backdrop, so the box matches it. */
+/* For wide composed artwork that should never be cropped — show it whole,
+   centered in the standard visual height so the card matches its siblings
+   (a shorter last card lets the pinned stack poke out beneath it). The
+   image carries its own blue backdrop, so the box matches it. */
 .work-visual--contain {
-  min-height: 0;
   background: #b9d4e6;
   display: flex;
   align-items: center;
@@ -1288,6 +1309,8 @@ span.hero-prop > img {
     border-top-left-radius: 0;
   }
   .work-item:nth-child(n) { top: auto; }
+  /* no stacking on mobile, so the sticky runway spacer is dead space */
+  .work-list::after { content: none; }
   /* no stacking on mobile, so tabs sit flush-left on each card
      (nth-child specificity matches the desktop stagger rules) */
   .work-item:nth-child(n) .folder-tab { left: 0; border-top-left-radius: 0; }
@@ -1348,4 +1371,116 @@ span.hero-prop > img {
     transition: none !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* ───── Case-study password lock ───── */
+.case-lock-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(38, 35, 29, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--page-pad);
+}
+.case-lock-page {
+  min-height: 100vh;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--page-pad);
+}
+.case-lock-card {
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  padding: 2rem;
+  max-width: 26rem;
+  width: 100%;
+  box-shadow: 0 24px 60px rgba(38, 35, 29, 0.25);
+}
+.case-lock-glyph {
+  font-size: 1.4rem;
+  margin-bottom: 0.75rem;
+}
+.case-lock-card h3 {
+  font-size: 1.25rem;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+.case-lock-card > p {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  margin-bottom: 1.25rem;
+}
+.case-lock-label {
+  display: block;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.4rem;
+}
+.case-lock-row {
+  display: flex;
+  gap: 0.5rem;
+}
+.case-lock-row input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+}
+.case-lock-row input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+.case-lock-row button {
+  padding: 0.55rem 1.1rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--bg);
+  font: inherit;
+  cursor: pointer;
+}
+.case-lock-row button:hover { opacity: 0.85; }
+.case-lock-row button:disabled { opacity: 0.6; cursor: default; }
+.case-lock-error {
+  margin-top: 0.6rem;
+  color: var(--accent);
+  font-size: 0.85rem;
+}
+.case-lock-dismiss {
+  margin-top: 1rem;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.case-lock-back {
+  display: inline-block;
+  margin-top: 1rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.case-lock-back:hover { color: var(--ink); }
+
+/* Locked card CTA is a <button>, restyled to match the .work-cta-link pill. */
+button.work-cta-link {
+  border: 0;
+  font: inherit;
+  cursor: pointer;
 }

@@ -10,6 +10,8 @@ import CryptoExchangeCase from './pages/CryptoExchangeCase';
 import PayoutModuleCase from './pages/PayoutModuleCase';
 import LosCase from './pages/LosCase';
 import CreditLineCase from './pages/CreditLineCase';
+import DownloadCase from './pages/DownloadCase';
+import { CaseLockScreen, isCaseUnlocked } from './components/CaseLock';
 
 function getRoute() {
   return window.location.hash || '#/';
@@ -30,6 +32,16 @@ function Home() {
       <Footer />
     </>
   );
+}
+
+// The download case study is password-protected: direct visits to its URL get
+// the lock screen until the session is unlocked (see components/CaseLock.jsx).
+function GatedDownloadCase() {
+  const [unlocked, setUnlocked] = useState(isCaseUnlocked());
+  if (!unlocked) {
+    return <CaseLockScreen onUnlock={() => setUnlocked(true)} />;
+  }
+  return <DownloadCase />;
 }
 
 // Page routes swap the rendered component; section anchors (#work, #about…)
@@ -54,6 +66,9 @@ export default function App() {
     return () => window.removeEventListener('hashchange', onHash);
   }, []);
 
+  if (route === '#/work/enterprise-downloads') {
+    return <GatedDownloadCase />;
+  }
   if (route === '#/work/crypto-exchange') {
     return <CryptoExchangeCase />;
   }

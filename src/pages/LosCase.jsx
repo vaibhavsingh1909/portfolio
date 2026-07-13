@@ -321,9 +321,9 @@ export default function LosCase() {
           </section>
 
           <nav className="pager">
-            <a href="#/">
-              <div className="label">All work</div>
-              ← Home page
+            <a href="#/work/enterprise-downloads">
+              <div className="label">Previous case</div>
+              ← Enterprise Downloads
             </a>
             <a href="#/work/crypto-exchange" className="next">
               <div className="label">Next case</div>

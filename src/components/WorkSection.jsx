@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
+import { CaseLockDialog, isCaseUnlocked } from './CaseLock';
 
 const projects = [
   {
@@ -20,6 +22,20 @@ const projects = [
   },
   {
     id: 2,
+    title: 'Enterprise Download Experience',
+    company: 'Acme Software',
+    year: '2026',
+    desc: 'An AI-accelerated redesign delivered in two days — 20+ legacy product download pages unified into one scalable template, the latest version downloadable in a single click.',
+    eyebrow: 'AI-Assisted Design',
+    category: 'Download Experience',
+    cardColor: '#cfe0d8',
+    inkColor: '#14332c',
+    media: '/saas%20enterprise%20download%20page/Thumbnail.svg',
+    caseStudy: '#/work/enterprise-downloads',
+    locked: true,
+  },
+  {
+    id: 3,
     title: 'Loan Origination System',
     company: 'Credflow',
     year: '2024',
@@ -33,7 +49,7 @@ const projects = [
     caseStudy: '#/work/los',
   },
   {
-    id: 3,
+    id: 4,
     title: 'Crypto Currency Exchange',
     company: 'Hatio Tech',
     year: '2021 — 2023',
@@ -46,7 +62,7 @@ const projects = [
     caseStudy: '#/work/crypto-exchange',
   },
   {
-    id: 4,
+    id: 5,
     title: 'Credit Line for Businesses',
     company: 'Credflow',
     year: '2024',
@@ -59,7 +75,7 @@ const projects = [
     caseStudy: '#/work/credit-line',
   },
   {
-    id: 5,
+    id: 6,
     title: 'Fintech Wallet Payout Module',
     company: 'Hatio Tech',
     year: '2021 — 2023',
@@ -74,9 +90,29 @@ const projects = [
   },
 ];
 
-function ProjectAction({ project }) {
+function ProjectAction({ project, onLockedClick }) {
   if (project.nda) {
     return <span className="work-cta-muted">NDA work · walkthrough available</span>;
+  }
+
+  if (project.locked) {
+    return (
+      <button
+        type="button"
+        className="work-cta-link"
+        aria-label="Read case study (password protected)"
+        onClick={() => {
+          if (isCaseUnlocked()) {
+            window.location.hash = project.caseStudy;
+          } else {
+            onLockedClick(project.caseStudy);
+          }
+        }}
+      >
+        <span className="work-cta-text">Read case study</span>
+        <ArrowRight className="work-cta-icon" size={18} strokeWidth={1.75} aria-hidden="true" />
+      </button>
+    );
   }
 
   return (
@@ -88,6 +124,8 @@ function ProjectAction({ project }) {
 }
 
 export default function WorkSection() {
+  const [lockTarget, setLockTarget] = useState(null);
+
   return (
     <section id="work" className="work-section">
       <h2 className="section-label">Selected Work</h2>
@@ -114,7 +152,7 @@ export default function WorkSection() {
               <div>
                 <h3 className="work-title">{p.title}</h3>
               </div>
-              <ProjectAction project={p} />
+              <ProjectAction project={p} onLockedClick={setLockTarget} />
             </div>
 
             <div className={`work-visual${p.mediaFit ? ` work-visual--${p.mediaFit}` : ''}${p.tinted ? ' work-visual--tinted' : ''}`}>
@@ -144,6 +182,16 @@ export default function WorkSection() {
           </article>
         ))}
       </div>
+
+      <CaseLockDialog
+        open={lockTarget !== null}
+        onClose={() => setLockTarget(null)}
+        onUnlock={() => {
+          const target = lockTarget;
+          setLockTarget(null);
+          window.location.hash = target;
+        }}
+      />
     </section>
   );
 }
