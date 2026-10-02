@@ -308,9 +308,9 @@ export default function DownloadCase() {
           </section>
 
           <nav className="pager">
-            <a href="#/">
-              <div className="label">All work</div>
-              ← Home page
+            <a href="#/work/data-migration">
+              <div className="label">Previous case</div>
+              ← Data &amp; Asset Migration
             </a>
             <a href="#/work/los" className="next">
               <div className="label">Next case</div>

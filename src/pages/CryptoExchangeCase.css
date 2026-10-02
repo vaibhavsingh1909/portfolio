@@ -599,3 +599,44 @@
     max-width: 320px;
   }
 }
+
+/* ───── Data & asset migration case study ───── */
+/* No composed cover exists, so the hero frames a real prototype screen: the
+   light product UI sits inset on a deep ink panel (the work card's ink) and
+   bleeds off the bottom edge, matching the home-page card thumbnail. */
+.migration-page .hero-banner {
+  margin: 56px 0 0;
+  padding: clamp(24px, 5vw, 64px) clamp(24px, 8vw, 112px) 0;
+  aspect-ratio: 2404 / 1072;
+  border-radius: 14px;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(221, 213, 227, 0.32), transparent 70%),
+    #251b35;
+}
+.migration-page .hero-banner img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px 10px 0 0;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+}
+
+/* Section rhythm: the home page's `section + section` margin leaks in here
+   and stretches section gaps to ~100px; hold them at the case-study 80px. */
+.migration-page section + section {
+  margin-top: 0;
+}
+
+/* Flow steps: one 48px break before every step heading, so a step's screens
+   never sit closer to the next step than to their own copy. */
+.migration-page section h3 {
+  margin-top: 48px;
+}
+
+@media (max-width: 760px) {
+  .migration-page .hero-banner {
+    margin-top: 32px;
+    aspect-ratio: 4 / 3;
+  }
+}

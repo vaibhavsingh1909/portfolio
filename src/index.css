@@ -460,7 +460,9 @@ span.hero-prop > img {
    Each card has an angled tab on the top-left. */
 .work-item {
   position: sticky;
-  top: 6.5rem;
+  /* each card pins 0.75rem lower than the one before it (--card-index is set
+     per card in WorkSection), so the stack shows every folder edge */
+  top: calc(6.5rem + var(--card-index, 0) * 0.75rem);
   display: block;
   padding: clamp(1.25rem, 2.8vw, 2rem);
   border-radius: 8px;
@@ -478,7 +480,10 @@ span.hero-prop > img {
 .work-item .folder-tab {
   position: absolute;
   bottom: 100%;
-  left: 0;
+  /* stagger the tabs horizontally like folders in a drawer, so each one stays
+     visible when the cards stack on scroll. Spread evenly across the card,
+     reserving 8rem for the last tab, so any card count fits at any width. */
+  left: calc((100% - 8rem) * var(--card-index, 0) / max(var(--card-count, 2) - 1, 1));
   padding: 0.4rem 1.5rem 0.45rem 1.2rem;
   background: var(--card-color);
   color: color-mix(in srgb, var(--card-ink) 68%, transparent);
@@ -490,29 +495,6 @@ span.hero-prop > img {
   clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 100%, 0 100%);
 }
 
-.work-item:nth-child(2) { top: 7.25rem; }
-.work-item:nth-child(3) { top: 8rem; }
-.work-item:nth-child(4) { top: 8.75rem; }
-.work-item:nth-child(5) { top: 9.5rem; }
-.work-item:nth-child(6) { top: 10.25rem; }
-
-/* stagger the tabs horizontally like folders in a drawer, so each one
-   stays visible when the cards stack on scroll */
-.work-item:nth-child(1) .folder-tab { left: 0; }
-.work-item:nth-child(2) .folder-tab { left: 9rem; }
-.work-item:nth-child(3) .folder-tab { left: 18rem; }
-.work-item:nth-child(4) .folder-tab { left: 27rem; }
-.work-item:nth-child(5) .folder-tab { left: 36rem; }
-.work-item:nth-child(6) .folder-tab { left: 45rem; }
-/* six tabs at the full 9rem stagger overflow the card below ~960px (the
-   mobile reset only kicks in at 760px); tighten the drawer spacing there */
-@media (min-width: 761px) and (max-width: 960px) {
-  .work-item:nth-child(2) .folder-tab { left: 7rem; }
-  .work-item:nth-child(3) .folder-tab { left: 14rem; }
-  .work-item:nth-child(4) .folder-tab { left: 21rem; }
-  .work-item:nth-child(5) .folder-tab { left: 28rem; }
-  .work-item:nth-child(6) .folder-tab { left: 35rem; }
-}
 /* detached (staggered) tabs round their left corner too */
 .work-item:not(:first-child) .folder-tab { border-top-left-radius: 14px; }
 
@@ -628,6 +610,23 @@ span.hero-prop > img {
   object-position: top center;
 }
 
+/* Light product UI framed on a deep panel in the card's ink: the screen is
+   inset and bleeds off the bottom edge, so a dense enterprise screen reads as
+   a product shot rather than a cropped capture. */
+.work-visual--framed {
+  height: clamp(16rem, 42vw, 29rem);
+  padding: clamp(1.25rem, 4vw, 2.75rem) clamp(1.25rem, 5vw, 3.5rem) 0;
+  background:
+    radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--card-color) 30%, transparent), transparent 70%),
+    var(--card-ink);
+}
+.work-visual.work-visual--framed img {
+  height: auto;
+  min-height: 0;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.35);
+}
+
 /* warm tint for the LOS thumbnail so its cool green sits with the cream palette */
 .work-visual--tinted { position: relative; }
 .work-visual--tinted img { filter: sepia(0.25) saturate(0.92) hue-rotate(-14deg); }
@@ -703,7 +702,7 @@ span.hero-prop > img {
 }
 
 .work-card-bottom {
-  padding-top: 1rem;
+  padding-bottom: 1.25rem;
 }
 
 /* CTA: a round arrow button that expands into a pill revealing the label
@@ -747,6 +746,14 @@ span.hero-prop > img {
   flex-shrink: 0;
   transition: transform 0.3s ease;
 }
+/* locked case studies lead with a padlock; at rest it sits beside the arrow,
+   and the open pill's gap takes over its spacing */
+.work-cta-lock {
+  order: 0;
+  flex-shrink: 0;
+  margin-right: 0.3rem;
+  transition: margin-right 0.35s ease;
+}
 .work-item:hover .work-cta-link,
 .work-cta-link:hover,
 .work-cta-link:focus-visible {
@@ -762,6 +769,9 @@ span.hero-prop > img {
 .work-item:hover .work-cta-icon,
 .work-cta-link:hover .work-cta-icon,
 .work-cta-link:focus-visible .work-cta-icon { transform: rotate(-45deg); }
+.work-item:hover .work-cta-lock,
+.work-cta-link:hover .work-cta-lock,
+.work-cta-link:focus-visible .work-cta-lock { margin-right: 0; }
 
 .work-cta-muted {
   color: color-mix(in srgb, var(--card-ink) 72%, transparent);
@@ -1312,7 +1322,7 @@ span.hero-prop > img {
   /* no stacking on mobile, so the sticky runway spacer is dead space */
   .work-list::after { content: none; }
   /* no stacking on mobile, so tabs sit flush-left on each card
-     (nth-child specificity matches the desktop stagger rules) */
+     (nth-child lifts specificity over the :not(:first-child) tab rule) */
   .work-item:nth-child(n) .folder-tab { left: 0; border-top-left-radius: 0; }
   .work-card-top {
     grid-template-columns: 1fr;
@@ -1349,12 +1359,27 @@ span.hero-prop > img {
     height: auto;
     padding: 0 0 1px;
     background: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border: 0;
     border-radius: 0;
     border-bottom: 1px solid currentColor;
     overflow: visible;
     font-size: 0.88rem;
+    /* no pill fill here, so the label takes the card's ink, not its color */
+    color: var(--card-ink);
+    gap: 0.35rem;
   }
-  .work-cta-text { opacity: 1; }
+  /* keep hover unfilled too: the desktop hover fill would put the ink pill
+     behind ink text; the arrow's rotation stays as the hover cue */
+  .work-item:hover .work-cta-link,
+  .work-cta-link:hover,
+  .work-cta-link:focus-visible {
+    background: none;
+    gap: 0.35rem;
+  }
+  .work-cta-text { opacity: 1; max-width: none; }
+  .work-cta-lock { margin-right: 0; }
   .work-cta-icon {
     width: 1rem;
     height: 1rem;
@@ -1415,6 +1440,10 @@ span.hero-prop > img {
   font-size: 0.95rem;
   line-height: 1.55;
   margin-bottom: 1.25rem;
+}
+.case-lock-card > p strong {
+  color: var(--ink);
+  font-weight: 600;
 }
 .case-lock-label {
   display: block;
@@ -1478,9 +1507,9 @@ span.hero-prop > img {
 }
 .case-lock-back:hover { color: var(--ink); }
 
-/* Locked card CTA is a <button>, restyled to match the .work-cta-link pill. */
+/* Locked card CTA is a <button>, restyled to match the .work-cta-link pill
+   (its border comes from .work-cta-link, so the UA border never shows). */
 button.work-cta-link {
-  border: 0;
   font: inherit;
   cursor: pointer;
 }

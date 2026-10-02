@@ -1,8 +1,23 @@
 import { useState } from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Lock } from 'lucide-react';
 import { CaseLockDialog, isCaseUnlocked } from './CaseLock';
 
 const projects = [
+  {
+    id: 7,
+    title: 'Data & Asset Migration',
+    company: 'Perforce Software',
+    year: '2026',
+    desc: 'An AI-native workflow for moving years of compliance jobs off legacy engines onto DCT — Claude-assisted flow audit and IA, then a vibe-coded prototype customers could click through from a single link.',
+    eyebrow: 'DCT · Continuous Compliance · NDA',
+    category: 'SaaS / Enterprise Workflow',
+    cardColor: '#ddd5e3',
+    inkColor: '#251b35',
+    media: '/Migration%20app/image%20(34)%201.svg',
+    mediaFit: 'framed',
+    caseStudy: '#/work/data-migration',
+    locked: true,
+  },
   {
     id: 1,
     title: 'Continuous Compliance',
@@ -109,6 +124,7 @@ function ProjectAction({ project, onLockedClick }) {
           }
         }}
       >
+        <Lock className="work-cta-lock" size={14} strokeWidth={2} aria-hidden="true" />
         <span className="work-cta-text">Read case study</span>
         <ArrowRight className="work-cta-icon" size={18} strokeWidth={1.75} aria-hidden="true" />
       </button>
@@ -134,12 +150,12 @@ export default function WorkSection() {
         payment operations.
       </p>
 
-      <div className="work-list">
-        {projects.map((p) => (
+      <div className="work-list" style={{ '--card-count': projects.length }}>
+        {projects.map((p, i) => (
           <article
             className="work-item"
             key={p.id}
-            style={{ '--card-color': p.cardColor, '--card-ink': p.inkColor }}
+            style={{ '--card-color': p.cardColor, '--card-ink': p.inkColor, '--card-index': i }}
           >
             <div className="folder-tab" aria-hidden="true">{p.company}</div>
 
@@ -154,6 +170,12 @@ export default function WorkSection() {
               </div>
               <ProjectAction project={p} onLockedClick={setLockTarget} />
             </div>
+
+            {!p.nda && (
+              <div className="work-card-bottom">
+                <p className="work-desc">{p.desc}</p>
+              </div>
+            )}
 
             <div className={`work-visual${p.mediaFit ? ` work-visual--${p.mediaFit}` : ''}${p.tinted ? ' work-visual--tinted' : ''}`}>
               {p.media ? (
@@ -173,12 +195,6 @@ export default function WorkSection() {
                 </div>
               )}
             </div>
-
-            {!p.nda && (
-              <div className="work-card-bottom">
-                <p className="work-desc">{p.desc}</p>
-              </div>
-            )}
           </article>
         ))}
       </div>

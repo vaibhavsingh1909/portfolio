@@ -89,7 +89,22 @@ function LockForm({ onUnlock }) {
   );
 }
 
-// Modal shown when the locked work card's CTA is clicked on the home page.
+// One password (and one session unlock) covers every locked case study.
+function LockIntro({ titleId }) {
+  return (
+    <>
+      <div className="case-lock-glyph" aria-hidden="true">🔒</div>
+      <h3 id={titleId}>This case study is locked</h3>
+      <p>
+        It covers work at my current company and is under NDA. Please enter the password
+        shared in my <strong>resume</strong> to continue — the same password unlocks every
+        locked case study.
+      </p>
+    </>
+  );
+}
+
+// Modal shown when a locked work card's CTA is clicked on the home page.
 export function CaseLockDialog({ open, onClose, onUnlock }) {
   useEffect(() => {
     if (!open) return undefined;
@@ -111,12 +126,7 @@ export function CaseLockDialog({ open, onClose, onUnlock }) {
         aria-labelledby="case-lock-title"
         onClick={(event) => event.stopPropagation()}
       >
-        <div className="case-lock-glyph" aria-hidden="true">🔒</div>
-        <h3 id="case-lock-title">This case study is locked</h3>
-        <p>
-          It covers work at my current company and is under NDA. Please enter the password
-          shared in my resume to continue.
-        </p>
+        <LockIntro titleId="case-lock-title" />
         <LockForm onUnlock={onUnlock} />
         <button type="button" className="case-lock-dismiss" onClick={onClose}>
           Not now
@@ -131,12 +141,7 @@ export function CaseLockScreen({ onUnlock }) {
   return (
     <div className="case-lock-page">
       <div className="case-lock-card">
-        <div className="case-lock-glyph" aria-hidden="true">🔒</div>
-        <h3>This case study is locked</h3>
-        <p>
-          It covers work at my current company and is under NDA. Please enter the password
-          shared in my resume to continue.
-        </p>
+        <LockIntro />
         <LockForm onUnlock={onUnlock} />
         <a className="case-lock-back" href="#/">← Back to all work</a>
       </div>
